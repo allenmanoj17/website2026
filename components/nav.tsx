@@ -34,7 +34,7 @@ export default function Nav() {
               href="/#contact"
               className="shrink-0 whitespace-nowrap rounded-sm bg-[var(--accent)] px-[15px] py-[7px] text-[12px] font-medium text-[var(--dark-text)] transition-all duration-150 ease-in-out hover:opacity-90"
             >
-              Get in touch
+              Start a conversation
             </Link>
           </nav>
           <details className="group relative hidden max-[900px]:block">
@@ -62,7 +62,7 @@ export default function Nav() {
                 href="/#contact"
                 className="mt-2 inline-flex w-fit rounded-sm bg-[var(--accent)] px-4 py-2 text-[13px] font-medium text-[var(--dark-text)]"
               >
-                Get in touch
+                Start a conversation
               </Link>
             </nav>
           </details>

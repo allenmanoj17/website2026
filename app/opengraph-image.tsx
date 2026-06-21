@@ -29,7 +29,7 @@ export default function Image() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 92, lineHeight: 1, fontWeight: 300 }}>Allen Manoj</div>
           <div style={{ marginTop: 28, maxWidth: 900, fontSize: 46, lineHeight: 1.16, fontWeight: 300 }}>
-            Dashboards, pipelines, reporting systems, and AI workflows that make decisions clear.
+            Data pipelines, analytics systems, AI workflows, and data products from warehouse to interface.
           </div>
         </div>
         <div style={{ fontSize: 26, color: "#514841" }}>allenmanoj.com</div>

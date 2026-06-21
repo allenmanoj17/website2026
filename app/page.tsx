@@ -12,14 +12,14 @@ export const metadata: Metadata = {
     absolute: "Allen Manoj — Data, Reporting & AI Workflow Systems",
   },
   description:
-    "Allen Manoj builds dashboards, data pipelines, reporting automation, AI workflows, analytics products, and internal tools from Sydney.",
+    "Allen Manoj builds data pipelines, analytics systems, AI workflows, and data products end-to-end, from warehouse to interface.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Allen Manoj — Data, Reporting & AI Workflow Systems",
     description:
-      "Dashboards, pipelines, reporting systems, AI workflows, analytics products, and internal tools.",
+      "Data pipelines, analytics systems, AI workflows, and data products built end-to-end, from warehouse to interface.",
     url: "https://allenmanoj.com",
     siteName: "Allen Manoj",
     images: [
@@ -100,11 +100,8 @@ export default function Home() {
             <h1 className="hero-title mb-5">
               Allen Manoj
             </h1>
-            <p className="hero-statement mb-7 max-w-[860px]">
-              Dashboards, pipelines, reporting systems, and AI workflows that make decisions clear.
-            </p>
-            <p className="body-copy mb-9 max-w-[620px] text-[18px]">
-              I turn scattered inputs into reliable systems people can use.
+            <p className="hero-statement mb-9 max-w-[900px]">
+              I build data pipelines, analytics systems, AI workflows, and data products — end-to-end, from warehouse to interface.
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
               <Link
@@ -152,37 +149,42 @@ export default function Home() {
                 className="group col-span-2 rounded bg-[var(--accent)] p-8 text-[var(--dark-text)] shadow-[0_24px_70px_rgba(137,28,28,0.32)] transition-transform duration-200 ease-in-out hover:-translate-y-1 max-[820px]:col-span-1 max-[640px]:p-6"
               >
                 <div className="grid grid-cols-[minmax(0,1fr)_280px] gap-8 max-[820px]:grid-cols-1">
-                  <div>
-                    <h3 className="text-[clamp(36px,5vw,64px)] font-light leading-none tracking-normal">
-                      Lens
-                    </h3>
-                    <p className="mt-5 max-w-[720px] text-[20px] leading-[1.55] text-[rgba(255,247,238,0.9)] max-[640px]:text-[17px]">
-                      Try Lens for your website. It scans trust, speed, AI readability, and
-                      conversion signals, then turns them into prioritised fixes.
-                    </p>
+                  <div className="flex min-h-[320px] flex-col justify-between max-[820px]:min-h-0">
+                    <div>
+                      <div className="mb-5 inline-flex rounded-sm bg-[var(--dark-text)] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--accent)]">
+                        live product
+                      </div>
+                      <h3 className="text-[clamp(36px,5vw,64px)] font-light leading-none tracking-normal">
+                        Lens
+                      </h3>
+                      <p className="mt-5 max-w-[720px] text-[20px] leading-[1.55] text-[rgba(255,247,238,0.9)] max-[640px]:text-[17px]">
+                        Try Lens for your website. It scans trust, speed, AI readability, and
+                        conversion signals, then turns them into prioritised fixes.
+                      </p>
+                    </div>
                     <span className="mt-8 inline-flex rounded-sm bg-[var(--dark-text)] px-5 py-[11px] text-[13px] font-medium text-[var(--accent)] transition-opacity duration-150 group-hover:opacity-90">
                       Run a Lens scan →
                     </span>
                   </div>
-                  <div className="self-end rounded bg-[rgba(255,255,255,0.12)] p-5">
+                  <div className="self-stretch rounded bg-[rgba(255,255,255,0.12)] p-5">
                     <div className="mb-5 flex items-end justify-between gap-4">
                       <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[rgba(255,247,238,0.72)]">
-                        Website score
+                        Sample audit
                       </span>
                       <span className="text-[48px] font-light leading-none">82</span>
                     </div>
-                    <div className="space-y-3 font-mono text-[12px] text-[rgba(255,247,238,0.82)]">
-                      <div className="flex justify-between gap-5">
-                        <span>Trust</span>
-                        <span>Fix</span>
+                    <div className="space-y-4 text-[13px] leading-[1.55] text-[rgba(255,247,238,0.86)]">
+                      <div>
+                        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[rgba(255,247,238,0.58)]">
+                          Top issue
+                        </div>
+                        <div className="mt-1">Pricing and next-step copy are hard for AI tools to cite.</div>
                       </div>
-                      <div className="flex justify-between gap-5">
-                        <span>Speed</span>
-                        <span>Fix</span>
-                      </div>
-                      <div className="flex justify-between gap-5">
-                        <span>AI readability</span>
-                        <span>Fix</span>
+                      <div>
+                        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[rgba(255,247,238,0.58)]">
+                          Recommended fix
+                        </div>
+                        <div className="mt-1">Add one clear service summary, proof point, and contact path.</div>
                       </div>
                     </div>
                     <div className="mt-6 font-mono text-[12px] font-medium">

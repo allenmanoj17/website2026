@@ -3,8 +3,8 @@ import Link from "next/link";
 const socialLinks = [
   { label: "github", href: "https://github.com/allenmanoj17", external: true },
   { label: "linkedin", href: "https://linkedin.com/in/allenmanoj", external: true },
-  { label: "x", href: "https://x.com/allenmanoj87", external: true },
-  { label: "medium", href: "https://medium.com/@allenmanoj17", external: true },
+  { label: "x", href: "https://x.com/AllenManoj87", external: true },
+  { label: "medium", href: "https://allenmanoj.medium.com/", external: true },
   { label: "lens", href: "https://lens.allenmanoj.com", external: true },
 ];
 
@@ -82,7 +82,7 @@ export default function Footer() {
             Allen Manoj
           </div>
           <div className="mt-5 font-mono text-[12px] text-[var(--text-3)]">
-            © 2026 Allen Manoj — Crafted with clarity, caffeine ☕
+            © 2026 Allen Manoj — Crafted with clarity, caffeine
           </div>
         </div>
       </div>

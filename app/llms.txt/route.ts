@@ -27,8 +27,8 @@ Allen Manoj builds data, reporting, and AI workflow systems from Sydney, Austral
 Email: allen@allenmanoj.com
 GitHub: https://github.com/allenmanoj17
 LinkedIn: https://linkedin.com/in/allenmanoj
-X: https://x.com/allenmanoj87
-Medium: https://medium.com/@allenmanoj17
+X: https://x.com/AllenManoj87
+Medium: https://allenmanoj.medium.com/
 `;
 
   return new Response(body, {

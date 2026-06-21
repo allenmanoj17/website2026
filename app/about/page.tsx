@@ -39,8 +39,8 @@ const research = [
 const links = [
   { label: "GitHub", href: "https://github.com/allenmanoj17", external: true },
   { label: "LinkedIn", href: "https://linkedin.com/in/allenmanoj", external: true },
-  { label: "X", href: "https://x.com/allenmanoj87", external: true },
-  { label: "Medium", href: "https://medium.com/@allenmanoj17", external: true },
+  { label: "X", href: "https://x.com/AllenManoj87", external: true },
+  { label: "Medium", href: "https://allenmanoj.medium.com/", external: true },
   { label: "Lens", href: "https://lens.allenmanoj.com", external: true },
   { label: "Email", href: "mailto:allen@allenmanoj.com", external: false },
 ];

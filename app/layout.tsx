@@ -103,8 +103,8 @@ export default function RootLayout({
         sameAs: [
           "https://github.com/allenmanoj17",
           "https://linkedin.com/in/allenmanoj",
-          "https://x.com/allenmanoj87",
-          "https://medium.com/@allenmanoj17",
+          "https://x.com/AllenManoj87",
+          "https://allenmanoj.medium.com/",
           "https://lens.allenmanoj.com",
         ],
         jobTitle: "Data and AI systems builder",
