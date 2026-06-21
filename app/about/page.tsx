@@ -47,6 +47,12 @@ const links = [
 
 const focus = ["Data pipelines", "Reporting automation", "AI workflows", "Analytics products", "Internal tools"];
 
+const profileFacts = [
+  ["Based in", "Sydney, Australia"],
+  ["Current", "Project/Program Officer (Data & Systems)"],
+  ["Study", "MCS · Data Science & AI, University of Sydney"],
+];
+
 const leadership = [
   {
     title: "Co-Lead, Omdena Nellore Chapter",
@@ -72,7 +78,7 @@ function SocialLink({
   external: boolean;
 }) {
   const className =
-    "font-mono text-[12px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-75";
+    "font-mono text-[12px] text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-75";
 
   if (external) {
     return (
@@ -92,15 +98,15 @@ function SocialLink({
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-[var(--bg)] px-11 pb-14 pt-28 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
-        <div className="mx-auto grid max-w-[1140px] grid-cols-[minmax(0,1fr)_320px] gap-14 max-[900px]:grid-cols-1">
+      <section className="bg-[var(--bg)] px-11 pb-16 pt-28 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
+        <div className="mx-auto grid max-w-[1140px] grid-cols-[minmax(0,1fr)_380px] gap-12 max-[920px]:grid-cols-1">
           <div className="min-w-0">
             <SectionEye label="About" />
-            <h1 className="page-title mb-6">About Allen Manoj</h1>
+            <h1 className="page-title mb-6">I build the path from data to usable systems.</h1>
             <p className="lede max-w-[780px]">
               I work across the full path from data infrastructure to usable product.
             </p>
-            <div className="mt-7 max-w-[780px] space-y-4">
+            <div className="mt-7 max-w-[760px] space-y-4">
               <p className="body-copy">
                 I&apos;m based in Sydney and build data, reporting, and AI workflow systems:
                 pipelines, dashboards, monitoring workflows, intelligence tools, and internal
@@ -111,36 +117,41 @@ export default function AboutPage() {
                 maintainable automation, and interfaces that help someone make a better decision.
               </p>
             </div>
+            <div className="mt-8 grid max-w-[760px] grid-cols-3 gap-3 max-[720px]:grid-cols-1">
+              {focus.slice(0, 3).map((item) => (
+                <div key={item} className="rounded bg-[var(--panel)] p-4 shadow-[0_12px_36px_rgba(26,23,20,0.035)]">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--accent)]">
+                    Focus
+                  </div>
+                  <div className="mt-2 text-[15px] font-medium text-[var(--text)]">{item}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <aside className="self-start rounded bg-[var(--panel)] p-5 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
-            <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--text-3)]">
-              At a glance
+          <aside className="self-start rounded bg-[var(--dark)] p-6 text-[var(--dark-text)] shadow-[0_18px_46px_rgba(0,0,0,0.14)]">
+            <div className="mb-8 flex items-start justify-between gap-6">
+              <div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
+                  Allen Manoj
+                </div>
+                <div className="mt-4 text-[56px] font-light leading-none">AM</div>
+              </div>
+              <div className="rounded bg-[var(--accent)] px-3 py-2 font-mono text-[11px] text-[var(--dark-text)]">
+                data → system
+              </div>
             </div>
-            <dl className="mt-4 space-y-4">
-              <div>
-                <dt className="small-meta">Based in</dt>
-                <dd className="body-copy mt-1">Sydney, Australia</dd>
-              </div>
-              <div>
-                <dt className="small-meta">Current</dt>
-                <dd className="body-copy mt-1">MCS · Data Science & AI, University of Sydney</dd>
-              </div>
-              <div>
-                <dt className="small-meta">Focus</dt>
-                <dd className="mt-2 flex flex-wrap gap-[6px]">
-                  {focus.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-sm bg-[var(--surface)] px-[7px] py-[3px] font-mono text-[11px] text-[var(--text-2)]"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </dd>
-              </div>
+            <dl className="space-y-4">
+              {profileFacts.map(([label, value]) => (
+                <div key={label} className="border-t border-[rgba(255,247,238,0.14)] pt-4">
+                  <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
+                    {label}
+                  </dt>
+                  <dd className="mt-2 text-[14px] leading-[1.7] text-[var(--dark-text)]">{value}</dd>
+                </div>
+              ))}
             </dl>
-            <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2">
+            <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-[rgba(255,247,238,0.14)] pt-5">
               {links.map((link) => (
                 <SocialLink key={link.label} {...link} />
               ))}
@@ -149,18 +160,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-[var(--bg)] px-11 py-16 max-[900px]:px-6 max-[900px]:py-12 max-[420px]:px-4">
-        <div className="mx-auto grid max-w-[1140px] grid-cols-[260px_minmax(0,1fr)] gap-12 max-[900px]:grid-cols-1">
+      <section className="bg-[var(--surface)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-12 max-[420px]:px-4">
+        <div className="mx-auto grid max-w-[1140px] grid-cols-[300px_minmax(0,1fr)] gap-12 max-[900px]:grid-cols-1">
           <div>
             <SectionEye label="Experience" />
-            <h2 className="section-title">Recent work and roles.</h2>
+            <h2 className="section-title">Relevant data, systems, and product work.</h2>
+            <p className="body-copy mt-4">
+              Kept focused on roles that support the current story: data systems, reporting,
+              product analytics, research data, and decision tooling.
+            </p>
           </div>
-          <div className="space-y-3">
+          <div className="relative space-y-4 before:absolute before:left-[10px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-[var(--surface-2)] max-[720px]:before:hidden">
             {experience.map((item) => (
               <article
                 key={`${item.role}-${item.org}`}
-                className="grid grid-cols-[minmax(0,1fr)_190px] gap-6 rounded bg-[var(--panel)] p-5 shadow-[0_12px_36px_rgba(26,23,20,0.04)] max-[720px]:grid-cols-1"
+                className="relative grid grid-cols-[minmax(0,1fr)_210px] gap-6 rounded bg-[var(--panel)] p-5 pl-10 shadow-[0_12px_36px_rgba(26,23,20,0.04)] max-[720px]:grid-cols-1 max-[720px]:pl-5"
               >
+                <div className="absolute left-[5px] top-7 size-[11px] rounded-full bg-[var(--accent)] max-[720px]:hidden" />
                 <div>
                   <h3 className="card-title">{item.role}</h3>
                   <p className="body-copy mt-2">{item.description}</p>

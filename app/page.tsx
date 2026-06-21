@@ -91,11 +91,11 @@ function HomeProjectCard({ project }: { project: FeaturedProject }) {
 export default function Home() {
   return (
     <>
-      <section className="flex min-h-[calc(100svh-52px)] items-center bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4">
+      <section className="flex min-h-svh items-center bg-[var(--bg)] px-11 pb-16 pt-32 max-[900px]:px-6 max-[900px]:pb-12 max-[900px]:pt-28 max-[420px]:px-4">
         <div className="mx-auto w-full max-w-[1140px]">
           <div className="min-w-0 max-w-[900px]">
             <div className="mb-7 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--accent)]">
-              Sydney · available for projects & roles
+              Data and AI systems, end to end
             </div>
             <h1 className="hero-title mb-5">
               Allen Manoj

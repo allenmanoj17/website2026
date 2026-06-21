@@ -23,6 +23,9 @@ export default function ContactSection() {
         </div>
         <div className="self-end">
           <div className="rounded bg-[var(--dark-2)] p-5">
+            <div className="mb-4 inline-flex rounded-sm bg-[rgba(255,247,238,0.08)] px-3 py-2 font-mono text-[11px] text-[var(--dark-text)]">
+              Sydney · available for projects & roles
+            </div>
             <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
               Best next step
             </div>

@@ -24,7 +24,7 @@ export default function Image() {
         }}
       >
         <div style={{ color: "#891C1C", fontSize: 28, letterSpacing: 2, textTransform: "uppercase" }}>
-          Sydney · available for projects & roles
+          Data and AI systems, end to end
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 92, lineHeight: 1, fontWeight: 300 }}>Allen Manoj</div>

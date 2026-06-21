@@ -271,6 +271,14 @@ export const archive = [
 
 export const experience = [
   {
+    role: "Project/Program Officer (Data & Systems)",
+    org: "Careers Centre, The University of Sydney",
+    dates: "Jan 2026 – Present",
+    description:
+      "Cleaned and analysed student engagement metrics with Excel, Python, and Power BI to support internal reporting and service improvements.",
+    tags: ["Excel", "Python", "Power BI", "Data Analysis"],
+  },
+  {
     role: "Research Data Assistant",
     org: "The University of Sydney",
     dates: "Aug 2025 – Feb 2026",
@@ -279,12 +287,12 @@ export const experience = [
     tags: ["Python", "SQL", "Power BI"],
   },
   {
-    role: "Data Intern",
+    role: "Careers Centre Intern",
     org: "Careers Centre, The University of Sydney",
-    dates: "Apr 2025 – Present",
+    dates: "Apr 2025 – Dec 2025",
     description:
-      "Cleaned and analysed student engagement metrics with Excel, Python, and Power BI to support internal reporting and service improvements.",
-    tags: ["Excel", "Python", "Power BI", "Data Analysis"],
+      "Supported student-facing operations, career resources, workshops, and reporting workflows while contributing to engagement analysis.",
+    tags: ["Excel", "Reporting", "Operations", "Communication"],
   },
   {
     role: "Data Consultant Intern",
