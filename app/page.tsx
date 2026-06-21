@@ -168,20 +168,20 @@ export default function Home() {
                   </div>
                   <div className="self-stretch rounded bg-[rgba(255,255,255,0.12)] p-5">
                     <div className="mb-5 flex items-end justify-between gap-4">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[rgba(255,247,238,0.72)]">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#fff7ee]">
                         Sample audit
                       </span>
                       <span className="text-[48px] font-light leading-none">82</span>
                     </div>
                     <div className="space-y-4 text-[13px] leading-[1.55] text-[rgba(255,247,238,0.86)]">
                       <div>
-                        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[rgba(255,247,238,0.58)]">
+                        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#fff7ee]">
                           Top issue
                         </div>
                         <div className="mt-1">Pricing and next-step copy are hard for AI tools to cite.</div>
                       </div>
                       <div>
-                        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[rgba(255,247,238,0.58)]">
+                        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#fff7ee]">
                           Recommended fix
                         </div>
                         <div className="mt-1">Add one clear service summary, proof point, and contact path.</div>

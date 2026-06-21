@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Allen Manoj", url: "https://allenmanoj.com" }],
   creator: "Allen Manoj",
   publisher: "Allen Manoj",
+  icons: {
+    icon: "/favicon.svg",
+  },
   alternates: {
     canonical: "/",
   },

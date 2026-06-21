@@ -18,17 +18,17 @@ Allen Manoj builds data, reporting, and AI workflow systems from Sydney, Austral
 - BrandScan: internal tool for extracting design tokens from websites.
 
 ## Key pages
-- Home: https://allenmanoj.com/
-- Work: https://allenmanoj.com/work
-- About: https://allenmanoj.com/about
-- Writing: https://allenmanoj.com/writing
+- [Home](https://allenmanoj.com/)
+- [Work](https://allenmanoj.com/work)
+- [About](https://allenmanoj.com/about)
+- [Writing](https://allenmanoj.com/writing)
 
 ## Contact
-Email: allen@allenmanoj.com
-GitHub: https://github.com/allenmanoj17
-LinkedIn: https://linkedin.com/in/allenmanoj
-X: https://x.com/AllenManoj87
-Medium: https://allenmanoj.medium.com/
+- Email: [allen@allenmanoj.com](mailto:allen@allenmanoj.com)
+- GitHub: [github.com/allenmanoj17](https://github.com/allenmanoj17)
+- LinkedIn: [linkedin.com/in/allenmanoj](https://linkedin.com/in/allenmanoj)
+- X: [x.com/AllenManoj87](https://x.com/AllenManoj87)
+- Medium: [allenmanoj.medium.com](https://allenmanoj.medium.com/)
 `;
 
   return new Response(body, {
