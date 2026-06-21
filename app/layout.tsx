@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
+import { featuredProjects } from "@/data/site";
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -186,6 +187,30 @@ export default function RootLayout({
           },
         ],
       },
+      {
+        "@type": "ItemList",
+        "@id": "https://allenmanoj.com/work#featured-systems",
+        name: "Featured systems by Allen Manoj",
+        itemListElement: featuredProjects.map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          url: `https://allenmanoj.com/work/${project.slug}`,
+          name: project.name,
+          description: project.outcome,
+        })),
+      },
+      ...featuredProjects.map((project) => ({
+        "@type": project.name === "Lens" ? "SoftwareApplication" : "CreativeWork",
+        "@id": `https://allenmanoj.com/work/${project.slug}#system`,
+        name: project.name,
+        url: `https://allenmanoj.com/work/${project.slug}`,
+        description: project.summary,
+        creator: {
+          "@id": "https://allenmanoj.com/#person",
+        },
+        keywords: project.tags.join(", "),
+        applicationCategory: project.name === "Lens" ? "BusinessApplication" : undefined,
+      })),
     ],
   };
 

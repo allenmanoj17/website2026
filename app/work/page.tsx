@@ -39,7 +39,7 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="bg-[var(--bg)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
+      <section id="featured-systems" className="bg-[var(--bg)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
         <div className="mx-auto max-w-[1140px]">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
             <div>

@@ -143,7 +143,7 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-5 max-[820px]:grid-cols-1">
             {lensProject ? (
               <a
-                href={lensProject.href}
+                href={lensProject.tryHref ?? lensProject.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group col-span-2 rounded bg-[var(--accent)] p-8 text-[var(--dark-text)] shadow-[0_24px_70px_rgba(137,28,28,0.32)] transition-transform duration-200 ease-in-out hover:-translate-y-1 max-[820px]:col-span-1 max-[640px]:p-6"

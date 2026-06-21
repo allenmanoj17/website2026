@@ -8,6 +8,7 @@ type ProjectRowProps = {
   badgeVariant: BadgeVariant;
   tags: string[];
   href: string;
+  tryHref?: string;
 };
 
 const badgeClasses: Record<BadgeVariant, string> = {
@@ -25,6 +26,7 @@ export default function ProjectRow({
   badgeVariant,
   tags,
   href,
+  tryHref,
 }: ProjectRowProps) {
   const external = href.startsWith("http");
   const isLink = href !== "#";
@@ -73,10 +75,15 @@ export default function ProjectRow({
         >
           {isLink
             ? badgeVariant === "product"
-              ? "Try Lens for your website →"
-              : "View project →"
+              ? "View Lens notes →"
+              : "View system notes →"
             : "Request a walkthrough →"}
         </span>
+        {tryHref ? (
+          <span className="font-mono text-[12px] font-medium text-[var(--accent)]">
+            Try it →
+          </span>
+        ) : null}
         {tags.map((tag) => (
           <span
             key={tag}

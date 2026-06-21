@@ -1,53 +1,115 @@
 export const featuredProjects = [
   {
     name: "Reporting Automation Demo",
+    slug: "reporting-automation-demo",
     description:
       "A small-business reporting system that turns spreadsheet exports into a clean owner dashboard, scheduled summaries, and exception alerts.",
     outcome: "Turns manual weekly reporting into a repeatable decision workflow.",
     badge: "commercial demo",
     badgeVariant: "build" as const,
     tags: ["Power BI", "Python", "SQL", "Automation"],
-    href: "#",
+    href: "/work/reporting-automation-demo",
+    summary:
+      "A commercial-style demo for businesses that still rely on weekly exports, spreadsheet stitching, and manual reporting commentary.",
+    problem:
+      "The reporting work exists, but it depends on manual exports, inconsistent spreadsheet logic, and status meetings to explain what changed.",
+    system:
+      "The system normalises incoming files, applies checks, prepares owner-level metrics, highlights exceptions, and produces scheduled summaries.",
+    output:
+      "A maintained reporting workflow with a dashboard, exception list, weekly summary, and clearer ownership around the numbers.",
+    visual: "dashboard",
+    ctaLabel: "Request a walkthrough",
+    ctaHref: "mailto:allen@allenmanoj.com?subject=Reporting%20automation%20walkthrough",
   },
   {
     name: "Lens",
+    slug: "lens",
     description:
       "Scans public websites and scores them across trust, speed, AI readability, and conversion, then explains each issue in plain English.",
     outcome: "Turns website signals into prioritised fixes.",
     badge: "independent product",
     badgeVariant: "product" as const,
     tags: ["Claude", "Playwright", "FastAPI"],
-    href: "https://lens.allenmanoj.com",
+    href: "/work/lens",
+    tryHref: "https://lens.allenmanoj.com",
+    summary:
+      "A website analysis product for founders, operators, and small teams who need a clearer view of what a site communicates to humans and AI tools.",
+    problem:
+      "Most site audits are either too technical or too vague. They rarely connect trust, clarity, AI readability, and conversion into one prioritised fix list.",
+    system:
+      "Lens scans public pages, evaluates signals across trust, speed, AI readability, and conversion, then turns findings into plain-English actions.",
+    output:
+      "A prioritised audit with score, top issue, likely impact, and specific fixes a team can apply without reading a technical report.",
+    visual: "audit",
+    ctaLabel: "Run a Lens scan",
+    ctaHref: "https://lens.allenmanoj.com",
   },
   {
     name: "Plunk",
+    slug: "plunk",
     description:
       "A simulated revenue intelligence system with warehouse modelling, lead scoring, explainability, AI-assisted outreach, orchestration, and alerts.",
     outcome: "Turns product usage into sales action.",
     badge: "simulated case study",
     badgeVariant: "sim" as const,
     tags: ["BigQuery", "dbt", "XGBoost", "Airflow"],
-    href: "#",
+    href: "/work/plunk",
+    summary:
+      "A clearly labelled simulated case study showing how product usage data can become a sales and retention action layer.",
+    problem:
+      "Usage, account, and revenue signals often exist in separate systems, so sales teams cannot easily see which accounts need attention.",
+    system:
+      "The case study models warehouse data, scores leads, adds explainability, drafts assisted outreach, and routes alerts through an orchestration layer.",
+    output:
+      "A revenue intelligence workflow that converts product behaviour into prioritised account action while keeping the simulated nature explicit.",
+    visual: "flow",
+    ctaLabel: "Request a walkthrough",
+    ctaHref: "mailto:allen@allenmanoj.com?subject=Plunk%20case%20study%20walkthrough",
   },
   {
     name: "Sentinel",
+    slug: "sentinel",
     description:
       "Open-source web intelligence system that creates watches for companies, people, topics, pages, and URLs, gathers source evidence with Firecrawl, scores changes with Claude, and escalates important updates through ElevenLabs voice briefings.",
     outcome: "Turns web changes into evidence-backed alerts.",
     badge: "independent build",
     badgeVariant: "build" as const,
     tags: ["Firecrawl", "Claude", "Supabase", "FastAPI"],
-    href: "https://github.com/allenmanoj17/sentinel",
+    href: "/work/sentinel",
+    sourceHref: "https://github.com/allenmanoj17/sentinel",
+    summary:
+      "An open-source web intelligence system for tracking meaningful changes across companies, people, topics, pages, and URLs.",
+    problem:
+      "Important web changes are noisy. Teams need evidence, scoring, and routing instead of another feed of unqualified updates.",
+    system:
+      "Sentinel creates watches, gathers source evidence, scores changes with an AI workflow, and escalates the important updates through briefings.",
+    output:
+      "Evidence-backed alerts with enough context to decide whether a change matters and what should happen next.",
+    visual: "evidence",
+    ctaLabel: "View source",
+    ctaHref: "https://github.com/allenmanoj17/sentinel",
   },
   {
     name: "BrandScan",
+    slug: "brandscan",
     description:
       "Crawls a website with headless Chromium and extracts colours, fonts, contrast ratios, and components into an editable brand board with exportable JSON, CSS, and Tailwind tokens.",
     outcome: "Turns visual websites into reusable design tokens.",
     badge: "internal tool",
     badgeVariant: "internal" as const,
     tags: ["Playwright", "Postgres", "Tailwind"],
-    href: "#",
+    href: "/work/brandscan",
+    summary:
+      "An internal tool for turning the visible language of a website into structured design tokens and reusable brand material.",
+    problem:
+      "Visual decisions often live only inside screenshots and CSS. Reusing them across a product or report takes manual inspection.",
+    system:
+      "BrandScan crawls a site, extracts colours, fonts, contrast ratios, and components, then arranges them into an editable brand board.",
+    output:
+      "A token-ready export across JSON, CSS, and Tailwind-style values so a visual system can be reused with less guesswork.",
+    visual: "tokens",
+    ctaLabel: "Request a walkthrough",
+    ctaHref: "mailto:allen@allenmanoj.com?subject=BrandScan%20walkthrough",
   },
 ];
 
