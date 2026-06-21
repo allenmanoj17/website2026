@@ -24,12 +24,12 @@ export default function Image() {
         }}
       >
         <div style={{ color: "#891C1C", fontSize: 28, letterSpacing: 2, textTransform: "uppercase" }}>
-          Data, reporting, and AI workflow systems
+          Sydney · available for projects & roles
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 92, lineHeight: 1, fontWeight: 300 }}>Allen Manoj</div>
           <div style={{ marginTop: 28, maxWidth: 900, fontSize: 46, lineHeight: 1.16, fontWeight: 300 }}>
-            Data pipelines, analytics systems, AI workflows, and data products from warehouse to interface.
+            Independent builder of data and AI systems.
           </div>
         </div>
         <div style={{ fontSize: 26, color: "#514841" }}>allenmanoj.com</div>

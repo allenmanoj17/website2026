@@ -18,7 +18,7 @@ export default function ProfileVisual() {
         <div>
           <div className="text-[72px] font-light leading-none">AM</div>
           <p className="mt-4 max-w-[260px] text-[14px] leading-[1.7] text-[var(--dark-text-2)]">
-            Building the path from unclear inputs to usable decisions.
+            allenmanoj.com · 2026
           </p>
         </div>
       </div>

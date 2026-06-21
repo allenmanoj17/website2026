@@ -95,12 +95,15 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[1140px]">
           <div className="min-w-0 max-w-[900px]">
             <div className="mb-7 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--accent)]">
-              Data, reporting, and AI workflow systems
+              Sydney · available for projects & roles
             </div>
             <h1 className="hero-title mb-5">
               Allen Manoj
             </h1>
-            <p className="hero-statement mb-9 max-w-[900px]">
+            <p className="hero-statement mb-6 max-w-[900px]">
+              Independent builder of data and AI systems.
+            </p>
+            <p className="body-copy mb-9 max-w-[740px] text-[18px]">
               I build data pipelines, analytics systems, AI workflows, and data products — end-to-end, from warehouse to interface.
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
@@ -127,7 +130,7 @@ export default function Home() {
             <div>
               <SectionEye label="Selected systems" dark />
               <h2 className="section-title section-title-dark max-w-[680px]">
-                Systems that turn messy inputs into useful outputs.
+                Systems built to turn messy data into clear decisions.
               </h2>
               <p className="body-copy body-copy-dark mt-3 max-w-[560px]">
                 Product demos, independent builds, and clearly labelled simulated case studies.
@@ -212,7 +215,7 @@ export default function Home() {
           <div className="self-start max-[980px]:max-w-[720px] min-[981px]:sticky min-[981px]:top-28">
             <SectionEye label="Where I can help" />
             <h2 className="section-title">
-              Practical systems for messy operational work.
+              Systems for the work that matters.
             </h2>
             <p className="body-copy mt-5">
               I help when the data exists, but the work still depends on manual reports,
