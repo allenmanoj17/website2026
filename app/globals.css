@@ -18,6 +18,10 @@
   --dark-2: #241D17;
   --dark-text: #FFF7EE;
   --dark-text-2: rgba(255,247,238,0.72);
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-micro: 140ms;
+  --motion-hover: 220ms;
+  --motion-reveal: 560ms;
 }
 
 * {
@@ -50,7 +54,7 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(46px, 7.2vw, 92px);
+    font-size: clamp(42px, 7.2vw, 92px);
     font-weight: 300;
     line-height: 0.98;
     letter-spacing: 0;
@@ -58,7 +62,7 @@ body {
   }
 
   .hero-statement {
-    font-size: clamp(30px, 4.4vw, 56px);
+    font-size: clamp(28px, 4.4vw, 56px);
     font-weight: 300;
     line-height: 1.08;
     letter-spacing: 0;
@@ -66,7 +70,7 @@ body {
   }
 
   .page-title {
-    font-size: clamp(44px, 6vw, 78px);
+    font-size: clamp(40px, 6vw, 78px);
     font-weight: 300;
     line-height: 1;
     letter-spacing: 0;
@@ -74,7 +78,7 @@ body {
   }
 
   .section-title {
-    font-size: clamp(28px, 3vw, 38px);
+    font-size: clamp(26px, 3vw, 38px);
     font-weight: 300;
     line-height: 1.16;
     letter-spacing: 0;
@@ -145,10 +149,15 @@ button:focus-visible {
 p,
 h1,
 h2,
-h3,
+h3 {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
 span,
-a {
-  overflow-wrap: break-word;
+a,
+.small-meta {
+  overflow-wrap: anywhere;
 }
 
 ::selection {
@@ -167,20 +176,169 @@ a {
   }
 }
 
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .reveal-card {
-  animation: reveal-up 0.55s ease both;
+  animation: reveal-up var(--motion-reveal) var(--motion-ease) both;
   animation-timeline: view();
   animation-range: entry 8% cover 28%;
 }
 
 .service-reveal {
-  animation: reveal-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: reveal-up 0.65s var(--motion-ease) both;
   animation-timeline: view();
   animation-range: entry 5% cover 30%;
+}
+
+.motion-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--motion-reveal) var(--motion-ease),
+    transform var(--motion-reveal) var(--motion-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.motion-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motion-nav {
+  animation: nav-in 420ms var(--motion-ease) both;
+  transition:
+    background-color var(--motion-hover) var(--motion-ease),
+    box-shadow var(--motion-hover) var(--motion-ease),
+    border-color var(--motion-hover) var(--motion-ease);
+}
+
+.motion-nav[data-scrolled="true"] {
+  box-shadow: 0 14px 42px rgba(26,23,20,0.12);
+}
+
+.motion-link {
+  position: relative;
+  transition:
+    color var(--motion-micro) var(--motion-ease),
+    transform var(--motion-micro) var(--motion-ease),
+    opacity var(--motion-micro) var(--motion-ease);
+}
+
+.motion-link:hover {
+  transform: translateY(-1px);
+}
+
+.motion-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -5px;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-hover) var(--motion-ease);
+}
+
+.motion-link:hover::after,
+.motion-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+.motion-button,
+.motion-project-card {
+  transition:
+    opacity var(--motion-micro) var(--motion-ease),
+    box-shadow var(--motion-hover) var(--motion-ease),
+    transform var(--motion-hover) var(--motion-ease);
+}
+
+.motion-button:hover,
+.motion-project-card:hover {
+  transform: translateY(-2px);
+}
+
+.motion-arrow {
+  display: inline-block;
+  transition: transform var(--motion-hover) var(--motion-ease);
+}
+
+.group:hover .motion-arrow,
+.motion-button:hover .motion-arrow {
+  transform: translateX(5px);
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 @media (max-width: 640px) {
   body {
     font-size: 14px;
+  }
+
+  .hero-title {
+    line-height: 1.02;
+  }
+
+  .hero-statement,
+  .page-title,
+  .section-title {
+    line-height: 1.12;
+  }
+
+  .body-copy {
+    font-size: 14.5px;
+    line-height: 1.72;
+  }
+
+  .lede {
+    font-size: 17px;
+  }
+
+  .card-title {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 520px) {
+  header > div,
+  main > section > div,
+  footer > div {
+    width: min(100%, 342px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .motion-reveal {
+    opacity: 1;
+    transform: none;
   }
 }

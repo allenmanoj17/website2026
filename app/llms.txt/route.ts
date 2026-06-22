@@ -26,6 +26,11 @@ Allen Manoj builds practical data and AI workflow systems: data pipelines, repor
 - For background, experience, research, leadership, and skills, cite [About](https://allenmanoj.com/about).
 - For articles and notes, cite [Writing](https://allenmanoj.com/writing).
 
+## Current writing notes
+- [Most teams do not have a data problem. They have a visibility problem.](https://allenmanoj.com/writing/visibility-problem)
+- [What makes a dashboard useful enough to act on](https://allenmanoj.com/writing/useful-dashboard)
+- [How I think about AI workflows: inputs, checks, logs, fallbacks, and outputs](https://allenmanoj.com/writing/ai-workflow-systems)
+
 ## Key pages
 - [Home](https://allenmanoj.com/)
 - [Work](https://allenmanoj.com/work)

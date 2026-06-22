@@ -1,44 +1,53 @@
 import Link from "next/link";
+import { ArrowUpRight, BriefcaseBusiness, Code2, Mail, PenLine, ScanSearch } from "lucide-react";
 
 const socialLinks = [
-  { label: "github", href: "https://github.com/allenmanoj17", external: true },
-  { label: "linkedin", href: "https://linkedin.com/in/allenmanoj", external: true },
-  { label: "x", href: "https://x.com/AllenManoj87", external: true },
-  { label: "medium", href: "https://allenmanoj.medium.com/", external: true },
-  { label: "lens", href: "https://lens.allenmanoj.com", external: true },
+  { label: "github", href: "https://github.com/allenmanoj17", external: true, icon: Code2 },
+  { label: "linkedin", href: "https://linkedin.com/in/allenmanoj", external: true, icon: BriefcaseBusiness },
+  { label: "x", href: "https://x.com/AllenManoj87", external: true, icon: ArrowUpRight },
+  { label: "medium", href: "https://allenmanoj.medium.com/", external: true, icon: PenLine },
+  { label: "lens", href: "https://lens.allenmanoj.com", external: true, icon: ScanSearch },
 ];
 
 const siteLinks = [
-  { label: "work", href: "/work", external: false },
-  { label: "writing", href: "/writing", external: false },
-  { label: "about", href: "/about", external: false },
-  { label: "privacy", href: "/privacy", external: false },
-  { label: "email", href: "mailto:allen@allenmanoj.com", external: false },
+  { label: "work", href: "/work", external: false, icon: ArrowUpRight },
+  { label: "writing", href: "/writing", external: false, icon: PenLine },
+  { label: "about", href: "/about", external: false, icon: ArrowUpRight },
+  { label: "privacy", href: "/privacy", external: false, icon: ArrowUpRight },
+  { label: "email", href: "mailto:allen@allenmanoj.com", external: false, icon: Mail },
 ];
 
 function FooterLink({
   label,
   href,
   external,
+  icon: Icon,
 }: {
   label: string;
   href: string;
   external: boolean;
+  icon: typeof ArrowUpRight;
 }) {
   const className =
-    "font-mono text-[12px] text-[var(--text-2)] transition-colors duration-150 ease-in-out hover:text-[var(--accent)]";
+    "inline-flex items-center gap-1.5 font-mono text-[12px] text-[var(--text-2)] transition-colors duration-150 ease-in-out hover:text-[var(--accent)]";
+  const content = (
+    <>
+      <Icon size={13} strokeWidth={1.8} aria-hidden="true" />
+      <span>{label}</span>
+    </>
+  );
 
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-        {label}
+        {content}
       </a>
     );
   }
 
   return (
     <Link href={href} className={className}>
-      {label}
+      {content}
     </Link>
   );
 }
@@ -78,10 +87,10 @@ export default function Footer() {
           </div>
         </div>
         <div className="pt-8">
-          <div className="text-[clamp(42px,9vw,112px)] font-light leading-none tracking-normal text-[var(--text)]">
+          <div className="text-[clamp(38px,9vw,112px)] font-light leading-none tracking-normal text-[var(--text)]">
             Allen Manoj
           </div>
-          <div className="mt-5 font-mono text-[12px] text-[var(--text-3)]">
+          <div className="mt-5 font-mono text-[12px] leading-[1.6] text-[var(--text-3)]">
             © 2026 Allen Manoj — Crafted with clarity, caffeine
           </div>
         </div>

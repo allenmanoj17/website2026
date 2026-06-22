@@ -1,14 +1,25 @@
+import { ArrowRight } from "lucide-react";
+
 type BadgeVariant = "product" | "sim" | "build" | "internal";
+type ProjectVisualType = "dashboard" | "audit" | "flow" | "evidence" | "tokens";
 
 type ProjectRowProps = {
   name: string;
+  slug?: string;
   description: string;
+  summary?: string;
   outcome?: string;
+  problem?: string;
+  system?: string;
+  output?: string;
+  visual?: ProjectVisualType;
   badge: string;
   badgeVariant: BadgeVariant;
   tags: string[];
   href: string;
   tryHref?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 };
 
 const badgeClasses: Record<BadgeVariant, string> = {
@@ -22,6 +33,9 @@ export default function ProjectRow({
   name,
   description,
   outcome,
+  problem,
+  system,
+  output,
   badge,
   badgeVariant,
   tags,
@@ -66,22 +80,44 @@ export default function ProjectRow({
           </p>
         ) : null}
         <p className="mt-4 text-[14px] leading-[1.75] text-[var(--text-2)]">{description}</p>
+        {problem && system && output ? (
+          <div className="mt-5 grid gap-2">
+            {[
+              ["Problem", problem],
+              ["System", system],
+              ["Output", output],
+            ].map(([label, text]) => (
+              <div key={label} className="rounded bg-[var(--surface)] p-3">
+                <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--accent)]">
+                  {label}
+                </div>
+                <p className="clamp-2 text-[12px] leading-[1.6] text-[var(--text-2)]">
+                  {text}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
       <div className="mt-6 flex min-w-0 flex-wrap items-center gap-2">
         <span
-          className={`font-mono text-[12px] font-medium ${
+          className={`inline-flex items-center gap-1.5 font-mono text-[12px] font-medium ${
             isLink ? "text-[var(--accent)]" : "text-[var(--text-3)]"
           }`}
         >
-          {isLink
-            ? badgeVariant === "product"
-              ? "View Lens notes →"
-              : "View system notes →"
-            : "Request a walkthrough →"}
+          <span>
+            {isLink
+              ? badgeVariant === "product"
+                ? "View Lens notes"
+                : "View system notes"
+              : "Request a walkthrough"}
+          </span>
+          <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
         </span>
         {tryHref ? (
-          <span className="font-mono text-[12px] font-medium text-[var(--accent)]">
-            Try it →
+          <span className="inline-flex items-center gap-1.5 font-mono text-[12px] font-medium text-[var(--accent)]">
+            <span>Try it</span>
+            <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
           </span>
         ) : null}
         {tags.map((tag) => (

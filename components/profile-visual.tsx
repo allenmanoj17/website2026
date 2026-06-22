@@ -1,26 +1,44 @@
+import Image from "next/image";
+
 export default function ProfileVisual() {
   return (
     <div
-      role="img"
-      aria-label="Abstract profile visual for Allen Manoj"
-      className="relative min-h-[320px] overflow-hidden rounded bg-[var(--dark)] p-6 text-[var(--dark-text)] shadow-[0_18px_46px_rgba(0,0,0,0.14)]"
+      className="relative overflow-hidden rounded bg-[var(--dark)] p-5 text-[var(--dark-text)] shadow-[0_18px_46px_rgba(0,0,0,0.14)]"
     >
-      <div className="absolute right-6 top-6 rounded bg-[var(--accent)] px-3 py-2 font-mono text-[11px] text-[var(--dark-text)]">
-        data → system
-      </div>
-      <div className="absolute bottom-0 left-1/2 h-[230px] w-[180px] -translate-x-1/2 rounded-t-full bg-[rgba(255,247,238,0.08)]" />
-      <div className="absolute bottom-[88px] left-1/2 size-[104px] -translate-x-1/2 rounded-full bg-[rgba(255,247,238,0.14)]" />
-      <div className="absolute bottom-0 left-1/2 h-[120px] w-[260px] -translate-x-1/2 rounded-t-[140px] bg-[rgba(255,247,238,0.12)]" />
-      <div className="relative z-10 flex h-full min-h-[268px] flex-col justify-between">
-        <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
-          Allen Manoj
-        </div>
+      <div className="mb-4 flex items-start justify-between gap-4">
         <div>
-          <div className="text-[72px] font-light leading-none">AM</div>
-          <p className="mt-4 max-w-[260px] text-[14px] leading-[1.7] text-[var(--dark-text-2)]">
-            allenmanoj.com · 2026
-          </p>
+          <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
+            Allen Manoj
+          </div>
+          <div className="mt-2 text-[15px] font-medium leading-[1.4] text-[var(--dark-text)]">
+            Data & AI systems
+          </div>
         </div>
+      </div>
+      <div className="relative aspect-[369/328] w-full overflow-hidden rounded bg-[var(--panel)]">
+        <Image
+          src="/allenmanoj.png"
+          alt="Portrait of Allen Manoj"
+          fill
+          sizes="(max-width: 900px) 100vw, 360px"
+          className="object-cover object-center"
+          priority={false}
+        />
+      </div>
+      <div className="mt-5 grid gap-3">
+        {[
+          ["Builds", "pipelines, dashboards, workflows"],
+          ["Works across", "warehouse to interface"],
+        ].map(([label, value]) => (
+          <div key={label} className="border-t border-[rgba(255,247,238,0.14)] pt-3">
+            <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
+              {label}
+            </div>
+            <div className="mt-1 text-[14px] leading-[1.6] text-[var(--dark-text)]">
+              {value}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

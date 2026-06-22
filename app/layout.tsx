@@ -103,6 +103,7 @@ export default function RootLayout({
         "@id": "https://allenmanoj.com/#person",
         name: "Allen Manoj",
         url: "https://allenmanoj.com",
+        image: "https://allenmanoj.com/allenmanoj.png",
         email: "mailto:allen@allenmanoj.com",
         sameAs: [
           "https://github.com/allenmanoj17",

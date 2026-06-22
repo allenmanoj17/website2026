@@ -1,123 +1,90 @@
+import { Bot, Database, LayoutDashboard, PackageCheck } from "lucide-react";
+import Reveal from "@/components/reveal";
 import SectionEye from "@/components/section-eye";
 
-const columns = [
+const groups = [
   {
-    number: "01",
-    header: "Data & warehousing",
-    description: "Clean source data, model it properly, and keep reporting inputs reliable.",
-    core: ["Python", "SQL", "dbt", "BigQuery", "PostgreSQL"],
-    supporting: ["Supabase", "Redshift", "Pandas", "NumPy", "DBeaver", "data modelling", "quality checks"],
+    title: "Data foundations",
+    description: "Python, SQL, dbt, BigQuery, PostgreSQL, Supabase, Redshift, Pandas, NumPy.",
+    icon: Database,
   },
   {
-    number: "02",
-    header: "AI & machine learning",
-    description: "Build model-assisted workflows around evidence, scoring, and human-readable output.",
-    core: ["Claude API", "LangChain", "Firecrawl", "scikit-learn", "XGBoost"],
-    supporting: ["SHAP", "TensorFlow", "Keras", "CNNs", "Hugging Face", "prompt evaluation"],
+    title: "Reporting & decisions",
+    description: "Power BI, Tableau, Looker Studio, QuickSight, Excel, KPI design, cohorts, stakeholder reporting.",
+    icon: LayoutDashboard,
   },
   {
-    number: "03",
-    header: "Products & interfaces",
-    description: "Turn the data work into tools, dashboards, admin screens, and usable products.",
-    core: ["Next.js", "React", "TypeScript", "FastAPI", "Tailwind CSS"],
-    supporting: ["JavaScript", "HTML", "CSS", "Flask", "Streamlit", "Recharts", "dashboard UX"],
+    title: "AI & analysis",
+    description: "Claude API, LangChain, Firecrawl, scikit-learn, XGBoost, SHAP, TensorFlow, Keras, experiment design.",
+    icon: Bot,
   },
   {
-    number: "04",
-    header: "Cloud & automation",
-    description: "Schedule jobs, move data, monitor workflows, and ship systems that keep running.",
-    core: ["AWS", "S3", "Lambda", "EventBridge", "Docker"],
-    supporting: ["Git", "GitHub Actions", "Celery", "Playwright", "Selenium", "Twilio", "Cloudflare Workers"],
+    title: "Products & automation",
+    description: "Next.js, React, TypeScript, FastAPI, Flask, Streamlit, AWS, Docker, GitHub Actions, Playwright.",
+    icon: PackageCheck,
   },
-  {
-    number: "05",
-    header: "Visualisation & BI",
-    description: "Design metrics, reporting views, and decision layers people can actually use.",
-    core: ["Power BI", "Tableau", "Google Looker Studio", "QuickSight"],
-    supporting: ["MS Excel", "Matplotlib", "Seaborn", "KPI design", "cohorts", "stakeholder reporting"],
-  },
-  {
-    number: "06",
-    header: "Research & analysis",
-    description: "Evaluate models and analysis carefully enough for the result to be trusted.",
-    core: ["experiment design", "cross-validation", "model tuning", "error analysis"],
-    supporting: ["R", "Jupyter Notebook", "classification", "clustering", "health research data"],
-  },
-  {
-    number: "07",
-    header: "Product & collaboration",
-    description: "Keep the system understandable across design, delivery, and stakeholder handoff.",
-    core: ["Figma", "Jira", "Asana", "VS Code"],
-    supporting: ["product specs", "workflow mapping", "documentation", "handoff notes"],
-  },
+];
+
+const compactTools = [
+  "R",
+  "Jupyter",
+  "DBeaver",
+  "Figma",
+  "Jira",
+  "Asana",
+  "Twilio",
+  "Selenium",
+  "Cloudflare Workers",
+  "Matplotlib",
+  "Seaborn",
+  "Recharts",
 ];
 
 export default function StackSection() {
   return (
     <section className="bg-[var(--bg)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
       <div className="mx-auto max-w-[1140px]">
-        <SectionEye label="Stack" />
-        <div className="mb-10 grid grid-cols-[minmax(0,680px)_minmax(220px,1fr)] gap-10 max-[900px]:grid-cols-1 max-[900px]:gap-5">
+        <Reveal className="mb-10 grid grid-cols-[minmax(0,620px)_minmax(260px,1fr)] items-end gap-10 max-[900px]:grid-cols-1">
           <div>
+            <SectionEye label="Stack" />
             <h2 className="section-title">
-              The stack is broad because the systems are end-to-end.
+              Tools I use to take work from raw data to a working system.
             </h2>
-            <p className="body-copy mt-3">
-              I work across the data layer, model layer, automation layer, and interface layer. The
-              value is being able to connect those parts into one working system.
-            </p>
           </div>
-          <div className="self-end rounded bg-[var(--panel)] p-5 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
-            <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--accent)]">
-              Working range
-            </div>
-            <p className="mt-3 text-[14px] leading-[1.7] text-[var(--text-2)]">
-              Warehouse logic, model workflows, scheduled automation, and the interface people use
-              to make decisions.
-            </p>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-4 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">
-          {columns.map((column) => (
-            <div
-              key={column.header}
-              className="group min-w-0 rounded bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.035)] transition-all duration-150 ease-in-out hover:-translate-y-[2px] hover:shadow-[0_16px_42px_rgba(26,23,20,0.07)]"
-            >
-              <div className="mb-5 flex items-start justify-between gap-4">
-                <div>
-                  <div className="font-mono text-[11px] text-[var(--accent)]">{column.number}</div>
-                  <h3 className="mt-3 text-[18px] font-medium leading-[1.35] text-[var(--text)]">
-                    {column.header}
-                  </h3>
+          <p className="body-copy max-w-[520px]">
+            The stack matters because the work usually crosses layers: source data, models,
+            automation, reporting, and the interface people use.
+          </p>
+        </Reveal>
+
+        <div className="grid grid-cols-2 gap-4 max-[820px]:grid-cols-1">
+          {groups.map((group, index) => (
+            <Reveal key={group.title} delay={index * 80}>
+              <article className="h-full rounded bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
+                <div className="mb-5 grid size-10 place-items-center rounded-sm bg-[var(--surface)] text-[var(--accent)]">
+                  <group.icon size={20} strokeWidth={1.8} aria-hidden="true" />
                 </div>
-                <div className="h-px min-w-[48px] flex-1 translate-y-[10px] bg-[var(--surface-2)] transition-colors duration-150 group-hover:bg-[var(--accent)]" />
-              </div>
-              <p className="mb-5 text-[14px] leading-[1.7] text-[var(--text-2)]">
-                {column.description}
-              </p>
-              <div className="mb-3 flex flex-wrap gap-[6px]">
-                {column.core.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-sm bg-[var(--accent)] px-[7px] py-[3px] font-mono text-[11px] text-[var(--dark-text)]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-[6px]">
-                {column.supporting.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-sm bg-[var(--surface)] px-[7px] py-[3px] font-mono text-[11px] text-[var(--text-2)]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
+                <h3 className="card-title">{group.title}</h3>
+                <p className="mt-3 text-[15px] leading-[1.75] text-[var(--text-2)]">
+                  {group.description}
+                </p>
+              </article>
+            </Reveal>
           ))}
         </div>
+
+        <Reveal delay={200} className="mt-5 rounded bg-[var(--surface)] p-5">
+          <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--accent)]">
+            Also comfortable with
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {compactTools.map((tool) => (
+              <span key={tool} className="font-mono text-[12px] text-[var(--text-2)]">
+                {tool}
+              </span>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -8,6 +8,21 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/privacy",
   },
+  openGraph: {
+    title: "Privacy — Allen Manoj",
+    description:
+      "Privacy and cookie information for allenmanoj.com, including contact details, analytics status, and cookie use.",
+    url: "https://allenmanoj.com/privacy",
+    siteName: "Allen Manoj",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Privacy information for allenmanoj.com",
+      },
+    ],
+  },
 };
 
 const items = [
