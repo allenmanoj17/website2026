@@ -126,7 +126,7 @@ export default function WritingPage() {
             </p>
           </div>
           <a
-            href="mailto:allen@allenmanoj.com"
+            href="mailto:allenmanoj17@gmail.com"
             className="inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--accent)] px-5 py-[10px] text-[13px] font-medium text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-90"
           >
             <Mail size={15} strokeWidth={1.8} aria-hidden="true" />

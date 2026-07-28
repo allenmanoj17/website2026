@@ -4,17 +4,17 @@ import SectionEye from "@/components/section-eye";
 
 const items = [
   {
-    statement: "Most teams don't have a data problem. They have a visibility problem.",
+    statement: "Most teams do not have a data problem. They have a visibility problem.",
     support:
-      "Start with inputs, definitions, and the decision the system needs to support.",
+      "Start with the inputs, metric definitions, and decision the system actually needs to support.",
   },
   {
-    statement: "AI doesn't replace good data infrastructure. It rewards it.",
+    statement: "AI does not replace good data infrastructure. It rewards it.",
     support:
-      "Models work best when inputs, checks, logs, fallbacks, and outputs are designed around them.",
+      "AI workflows work best when inputs, checks, logs, fallbacks, review paths, and outputs are designed deliberately.",
   },
   {
-    statement: "The best dashboard is the one nobody has to explain.",
+    statement: "The best dashboard is the one that makes the next step obvious.",
     support:
       "Use plain labels, prioritised actions, and obvious next steps instead of chart density.",
   },
@@ -32,7 +32,7 @@ export default function PovSection() {
             Clear systems beat clever dashboards.
           </h2>
           <p className="mt-3 text-[15px] leading-[1.75] text-[var(--dark-text-2)]">
-            Notes on making data legible enough to change what happens next.
+            Notes on making information clear enough to support a real decision or next step.
           </p>
         </Reveal>
         <div className="grid grid-cols-3 gap-4 max-[980px]:grid-cols-1">

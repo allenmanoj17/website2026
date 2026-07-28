@@ -4,4 +4,5 @@ out
 dist
 .env*
 *.tsbuildinfo
+test-results/
 .claude/

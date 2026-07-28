@@ -74,7 +74,7 @@ const links = [
   { label: "LinkedIn", href: "https://linkedin.com/in/allenmanoj", external: true, icon: BriefcaseBusiness },
   { label: "X", href: "https://x.com/AllenManoj87", external: true, icon: ArrowRight },
   { label: "Medium", href: "https://allenmanoj.medium.com/", external: true, icon: PenLine },
-  { label: "Email", href: "mailto:allen@allenmanoj.com", external: false, icon: Mail },
+  { label: "Email", href: "mailto:allenmanoj17@gmail.com", external: false, icon: Mail },
 ];
 
 const buildPrinciples = [
@@ -161,15 +161,16 @@ export default function AboutPage() {
             <Reveal className="min-w-0">
               <SectionEye label="About" />
               <h1 className="page-title mb-6 max-w-[820px]">
-                Data systems, reporting workflows, and useful internal tools.
+                I build the path from source data to operational software.
               </h1>
               <p className="lede max-w-[760px]">
                 I&apos;m Allen Manoj, based in Sydney. I build across the full path from data
                 infrastructure to usable product.
               </p>
               <p className="body-copy mt-5 max-w-[720px]">
-                My work sits where pipelines, metrics, automation, and interfaces meet. The goal is
-                practical clarity: systems people can inspect, trust, and act on.
+                My work sits where data contracts, analytical logic, automation, monitoring, and
+                interfaces meet. The goal is practical clarity: systems whose inputs, assumptions,
+                failure modes, and outputs are clear enough to trust.
               </p>
               <div className="mt-8 grid max-w-[720px] grid-cols-2 gap-3 max-[620px]:grid-cols-1">
                 {experienceHighlights.map((item) => (
@@ -189,7 +190,7 @@ export default function AboutPage() {
                   View selected work <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
                 </Link>
                 <a
-                  href="mailto:allen@allenmanoj.com"
+                  href="mailto:allenmanoj17@gmail.com"
                   className="inline-flex items-center gap-2 font-mono text-[13px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-80"
                 >
                   <Mail size={15} strokeWidth={1.8} aria-hidden="true" />

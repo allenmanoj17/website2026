@@ -90,7 +90,7 @@ export default function ServiceRow({
             </p>
             <p
               className={`mt-4 text-[13px] leading-[1.6] ${
-                isDark || isAccent ? "text-[rgba(255,247,238,0.64)]" : "text-[var(--text-3)]"
+                isDark || isAccent ? "text-[rgba(255,247,238,0.78)]" : "text-[var(--text-3)]"
               }`}
             >
               {usefulWhen}

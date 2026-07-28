@@ -1,7 +1,8 @@
 import { ArrowRight } from "lucide-react";
+import { cn, panelClassName } from "@/components/ui-primitives";
 
 type BadgeVariant = "product" | "sim" | "build" | "internal";
-type ProjectVisualType = "dashboard" | "audit" | "flow" | "evidence" | "tokens";
+type ProjectVisualType = "dashboard" | "audit" | "editorial" | "flow" | "evidence" | "tokens";
 
 type ProjectRowProps = {
   name: string;
@@ -13,6 +14,9 @@ type ProjectRowProps = {
   system?: string;
   output?: string;
   visual?: ProjectVisualType;
+  audience?: string;
+  flow?: string[];
+  analyticsLoop?: string[];
   badge: string;
   badgeVariant: BadgeVariant;
   tags: string[];
@@ -47,9 +51,10 @@ export default function ProjectRow({
 
   const content = (
     <div
-      className={`group flex h-full min-w-0 flex-col justify-between rounded bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.04)] transition-all duration-200 ease-in-out ${
-        isLink ? "hover:shadow-[0_12px_36px_rgba(26,23,20,0.08)]" : ""
-      }`}
+      className={cn(
+        panelClassName("light", "group flex h-full min-w-0 flex-col justify-between p-6 transition-all duration-200 ease-in-out"),
+        isLink && "hover:shadow-[0_12px_36px_rgba(26,23,20,0.08)]",
+      )}
     >
       <div>
         <div className="mb-5 flex flex-wrap items-center gap-2">

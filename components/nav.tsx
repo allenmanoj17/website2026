@@ -2,12 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Mail, Menu } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Mail, Menu, X } from "lucide-react";
+
+const links = [
+  { label: "Work", href: "/work" },
+  { label: "Writing", href: "/writing" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > window.innerHeight * 0.72);
@@ -16,7 +26,44 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", update);
   }, []);
 
-  const isActive = (href: string) => pathname === href;
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const menu = menuRef.current;
+    const focusable = menu?.querySelectorAll<HTMLElement>("a, button");
+    focusable?.[0]?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab" || !focusable?.length) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="fixed inset-x-0 top-3 z-50 px-4 max-[480px]:top-2 max-[480px]:px-3">
@@ -27,66 +74,70 @@ export default function Nav() {
         <div className="flex min-h-[52px] items-center justify-between gap-4">
           <Link
             href="/"
-            className="shrink-0 whitespace-nowrap text-[13px] font-medium tracking-normal text-[var(--text)] transition-all duration-150 ease-in-out"
+            className="shrink-0 whitespace-nowrap text-[13px] font-medium tracking-normal text-[var(--text)] transition-opacity duration-150 hover:opacity-75"
           >
             Allen Manoj
           </Link>
-          <nav className="flex min-w-0 items-center justify-end gap-8 max-[900px]:hidden">
-            <Link
-              href="/work"
-              className="motion-link text-[12.5px] text-[var(--text-2)]"
-              data-active={isActive("/work") ? "true" : "false"}
-            >
-              Work
-            </Link>
-            <Link
-              href="/writing"
-              className="motion-link text-[12.5px] text-[var(--text-2)]"
-              data-active={isActive("/writing") ? "true" : "false"}
-            >
-              Writing
-            </Link>
-            <Link
-              href="/about"
-              className="motion-link text-[12.5px] text-[var(--text-2)]"
-              data-active={isActive("/about") ? "true" : "false"}
-            >
-              About
-            </Link>
-            <Link
-              href="/#contact"
+          <nav aria-label="Primary navigation" className="flex min-w-0 items-center justify-end gap-7 max-[900px]:hidden">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="motion-link text-[12.5px] text-[var(--text-2)]"
+                data-active={isActive(link.href) ? "true" : "false"}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href="mailto:allenmanoj17@gmail.com"
               className="motion-button inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-sm bg-[var(--accent)] px-[15px] py-[7px] text-[12px] font-medium text-[var(--dark-text)] hover:opacity-90"
             >
               <Mail size={14} strokeWidth={1.8} aria-hidden="true" />
               Start a conversation
-            </Link>
+            </a>
           </nav>
-          <details className="group relative hidden max-[900px]:block">
-            <summary
-              aria-label="Open navigation"
-              className="flex size-10 cursor-pointer list-none items-center justify-center rounded-sm bg-[var(--accent)] text-[var(--dark-text)]"
-            >
+          <button
+            ref={menuButtonRef}
+            type="button"
+            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="hidden size-10 items-center justify-center rounded-sm bg-[var(--accent)] text-[var(--dark-text)] max-[900px]:flex"
+          >
+            {menuOpen ? (
+              <X size={18} strokeWidth={2} aria-hidden="true" />
+            ) : (
               <Menu size={18} strokeWidth={2} aria-hidden="true" />
-            </summary>
-            <nav className="absolute right-0 top-12 grid w-[min(320px,calc(100vw-1.5rem))] gap-2 rounded bg-[var(--nav-bg)] p-4 shadow-[0_16px_42px_rgba(26,23,20,0.12)] backdrop-blur-md">
-              <Link href="/work" className="rounded-sm px-1 py-2 text-[15px] text-[var(--text)]">
-                Work
-              </Link>
-              <Link href="/writing" className="rounded-sm px-1 py-2 text-[15px] text-[var(--text)]">
-                Writing
-              </Link>
-              <Link href="/about" className="rounded-sm px-1 py-2 text-[15px] text-[var(--text)]">
-                About
-              </Link>
-              <Link
-                href="/#contact"
+            )}
+          </button>
+          {menuOpen ? (
+            <nav
+              ref={menuRef}
+              id="mobile-navigation"
+              aria-label="Mobile navigation"
+              className="absolute right-4 top-14 grid w-[min(320px,calc(100vw-1.5rem))] gap-1 rounded bg-[var(--nav-bg)] p-4 shadow-[0_16px_42px_rgba(26,23,20,0.12)] backdrop-blur-md max-[480px]:right-3"
+            >
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-sm px-2 py-3 text-[15px] text-[var(--text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <a
+                href="mailto:allenmanoj17@gmail.com"
                 className="mt-2 inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--accent)] px-4 py-2 text-[13px] font-medium text-[var(--dark-text)]"
               >
                 <Mail size={14} strokeWidth={1.8} aria-hidden="true" />
                 Start a conversation
-              </Link>
+              </a>
             </nav>
-          </details>
+          ) : null}
         </div>
       </div>
     </header>

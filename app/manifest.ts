@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Allen Manoj",
     short_name: "Allen Manoj",
     description:
-      "Data pipelines, reporting systems, AI workflows, analytics products, and internal tools by Allen Manoj.",
+      "Data and AI decision systems spanning analytics infrastructure, intelligence workflows, monitoring, and operational software.",
     start_url: "/",
     display: "standalone",
     background_color: "#FFFCF9",

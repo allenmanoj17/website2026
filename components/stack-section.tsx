@@ -4,40 +4,25 @@ import SectionEye from "@/components/section-eye";
 
 const groups = [
   {
-    title: "Data foundations",
-    description: "Python, SQL, dbt, BigQuery, PostgreSQL, Supabase, Redshift, Pandas, NumPy.",
+    title: "Data engineering",
+    description: "SQL · Python · dbt · BigQuery · PostgreSQL · Supabase · data contracts · quality checks",
     icon: Database,
   },
   {
-    title: "Reporting & decisions",
-    description: "Power BI, Tableau, Looker Studio, QuickSight, Excel, KPI design, cohorts, stakeholder reporting.",
+    title: "Analytics and BI",
+    description: "Metric design · Power BI · Tableau · Looker Studio · Excel · cohorts · experimentation",
     icon: LayoutDashboard,
   },
   {
-    title: "AI & analysis",
-    description: "Claude API, LangChain, Firecrawl, scikit-learn, XGBoost, SHAP, TensorFlow, Keras, experiment design.",
+    title: "ML and applied AI",
+    description: "XGBoost · SHAP · scikit-learn · TensorFlow · evaluation · LLM workflows · retrieval",
     icon: Bot,
   },
   {
-    title: "Products & automation",
-    description: "Next.js, React, TypeScript, FastAPI, Flask, Streamlit, AWS, Docker, GitHub Actions, Playwright.",
+    title: "Systems and interfaces",
+    description: "FastAPI · Next.js · React · TypeScript · Airflow · AWS · APIs · monitoring · automation",
     icon: PackageCheck,
   },
-];
-
-const compactTools = [
-  "R",
-  "Jupyter",
-  "DBeaver",
-  "Figma",
-  "Jira",
-  "Asana",
-  "Twilio",
-  "Selenium",
-  "Cloudflare Workers",
-  "Matplotlib",
-  "Seaborn",
-  "Recharts",
 ];
 
 export default function StackSection() {
@@ -46,14 +31,14 @@ export default function StackSection() {
       <div className="mx-auto max-w-[1140px]">
         <Reveal className="mb-10 grid grid-cols-[minmax(0,620px)_minmax(260px,1fr)] items-end gap-10 max-[900px]:grid-cols-1">
           <div>
-            <SectionEye label="Stack" />
+            <SectionEye label="Capabilities" />
             <h2 className="section-title">
-              Tools I use to take work from raw data to a working system.
+              A practical capability matrix across the full system path.
             </h2>
           </div>
           <p className="body-copy max-w-[520px]">
-            The stack matters because the work usually crosses layers: source data, models,
-            automation, reporting, and the interface people use.
+            Tools are selected for the constraints of the system. The useful capability is
+            connecting the layers into one understandable workflow.
           </p>
         </Reveal>
 
@@ -73,18 +58,6 @@ export default function StackSection() {
           ))}
         </div>
 
-        <Reveal delay={200} className="mt-5 rounded bg-[var(--surface)] p-5">
-          <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--accent)]">
-            Also comfortable with
-          </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {compactTools.map((tool) => (
-              <span key={tool} className="font-mono text-[12px] text-[var(--text-2)]">
-                {tool}
-              </span>
-            ))}
-          </div>
-        </Reveal>
       </div>
     </section>
   );

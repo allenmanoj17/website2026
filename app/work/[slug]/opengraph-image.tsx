@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { notFound } from "next/navigation";
-import { featuredProjects } from "@/data/site";
+import { allProjects } from "@/data/site";
 
 export const size = {
   width: 1200,
@@ -10,7 +10,7 @@ export const size = {
 export const contentType = "image/png";
 
 function getProject(slug: string) {
-  return featuredProjects.find((project) => project.slug === slug);
+  return allProjects.find((project) => project.slug === slug);
 }
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
@@ -49,12 +49,12 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               fontSize: 22,
             }}
           >
-            {project.badge}
+            {project.publicStatus ?? project.classification}
           </div>
         </div>
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ color: "#891C1C", fontSize: 28, letterSpacing: 2, textTransform: "uppercase" }}>
-            System notes
+            Case study
           </div>
           <div style={{ marginTop: 24, fontSize: 86, lineHeight: 1, fontWeight: 300 }}>
             {project.name}
@@ -64,8 +64,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           </div>
         </div>
         <div style={{ display: "flex", gap: 12, color: "rgba(255,247,238,0.72)", fontSize: 24 }}>
-          {project.tags.slice(0, 4).map((tag) => (
-            <span key={tag}>{tag}</span>
+          {project.architecture.slice(0, 4).map((step) => (
+            <span key={step}>{step}</span>
           ))}
         </div>
       </div>

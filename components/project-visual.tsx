@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 type Project = {
   name: string;
-  visual?: "dashboard" | "audit" | "flow" | "evidence" | "tokens";
+  visual?: "dashboard" | "audit" | "editorial" | "flow" | "evidence" | "tokens";
 };
 
 type ProjectVisualProps = {
@@ -63,7 +63,7 @@ export default function ProjectVisual({
 }: ProjectVisualProps) {
   if (project.visual === "audit") {
     return (
-      <VisualShell label="Lens audit" tone={tone} compact={compact}>
+      <VisualShell label="Diagnostic preview" tone={tone} compact={compact}>
         <div className="mb-5 flex items-end justify-between gap-4">
           <div className={`font-mono text-[11px] leading-[1.5] ${mutedTextClass[tone]}`}>
             site health
@@ -94,7 +94,7 @@ export default function ProjectVisual({
         </div>
         {!compact ? (
           <div className={`mt-5 rounded p-4 text-[13px] leading-[1.55] ${insetClass[tone]}`}>
-            Add a service summary, proof point, and contact path.
+            Example finding: make the service, evidence, and next action explicit.
           </div>
         ) : null}
       </VisualShell>
@@ -118,6 +118,60 @@ export default function ProjectVisual({
     );
   }
 
+  if (project.visual === "editorial") {
+    return (
+      <VisualShell label="Editorial workspace" tone={tone} compact={compact}>
+        <div className="grid grid-cols-[0.8fr_1.2fr] gap-3 max-[520px]:grid-cols-1">
+          <div className={`rounded p-3 ${insetClass[tone]}`}>
+            <div className={`mb-3 font-mono text-[11px] ${mutedTextClass[tone]}`}>
+              source library
+            </div>
+            {["notes", "research", "signals"].map((item, index) => (
+              <div
+                key={item}
+                className={`mb-2 flex items-center justify-between rounded-sm px-3 py-2 text-[12px] last:mb-0 ${
+                  tone === "dark" ? "bg-[rgba(255,247,238,0.08)]" : "bg-[var(--panel)]"
+                }`}
+              >
+                <span>{item}</span>
+                <span className={`font-mono text-[10px] ${mutedTextClass[tone]}`}>0{index + 3}</span>
+              </div>
+            ))}
+          </div>
+          <div className={`rounded p-3 ${insetClass[tone]}`}>
+            <div className={`mb-3 flex items-center justify-between font-mono text-[11px] ${mutedTextClass[tone]}`}>
+              <span>draft comparison</span>
+              <span>voice rules</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {[62, 84].map((height, index) => (
+                <div
+                  key={height}
+                  className={`rounded-sm p-3 ${tone === "dark" ? "bg-[rgba(255,247,238,0.08)]" : "bg-[var(--panel)]"}`}
+                >
+                  <div className={`mb-2 h-2 rounded-sm ${accentBarClass[tone]}`} style={{ width: `${index === 0 ? 58 : 78}%` }} />
+                  <div
+                    className={`rounded-sm ${tone === "dark" ? "bg-[rgba(255,247,238,0.08)]" : "bg-[var(--surface)]"}`}
+                    style={{ minHeight: compact ? Math.max(48, height - 20) : height }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {!compact ? (
+          <div className={`mt-3 grid grid-cols-3 gap-3 text-[12px] max-[520px]:grid-cols-1 ${mutedTextClass[tone]}`}>
+            {["grounded draft", "visual asset", "performance review"].map((item) => (
+              <div key={item} className={`rounded px-3 py-2 ${insetClass[tone]}`}>
+                {item}
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </VisualShell>
+    );
+  }
+
   if (project.visual === "evidence") {
     return (
       <VisualShell label="Evidence feed" tone={tone} compact={compact}>
@@ -126,7 +180,13 @@ export default function ProjectVisual({
             key={item}
             className={`mb-3 grid grid-cols-[28px_minmax(0,1fr)_42px] items-center gap-3 rounded p-3 last:mb-0 ${insetClass[tone]}`}
           >
-            <span className="font-mono text-[11px] text-[var(--accent)]">0{index + 1}</span>
+            <span
+              className={`font-mono text-[11px] ${
+                tone === "dark" ? "text-[var(--dark-text)]" : "text-[var(--accent)]"
+              }`}
+            >
+              0{index + 1}
+            </span>
             <span className={`text-[13px] ${tone === "dark" ? "text-[var(--dark-text)]" : "text-[var(--text)]"}`}>
               {item}
             </span>
@@ -140,10 +200,14 @@ export default function ProjectVisual({
   }
 
   if (project.visual === "flow") {
+    const steps = project.name.includes("AIRS")
+      ? ["product and account data", "governed features", "explainable score", "revenue action"]
+      : ["source data", "processing", "decision", "handoff"];
+
     return (
       <VisualShell label="Workflow map" tone={tone} compact={compact}>
         <div className="grid gap-3">
-          {["product usage", "lead score", "explanation", "sales action"].map((item) => (
+          {steps.map((item) => (
             <div key={item} className={`rounded px-4 py-3 text-[13px] ${insetClass[tone]}`}>
               {item}
             </div>

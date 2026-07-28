@@ -44,7 +44,7 @@ const items = [
   },
   {
     title: "Contact",
-    body: "For privacy questions or requests, email allen@allenmanoj.com.",
+    body: "For privacy questions or requests, email allenmanoj17@gmail.com.",
   },
 ];
 

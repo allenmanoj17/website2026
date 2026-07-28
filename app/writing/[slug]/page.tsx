@@ -64,8 +64,8 @@ export default async function WritingNotePage({ params }: { params: Promise<{ sl
     "@type": "Article",
     headline: note.title,
     description: note.description,
-    datePublished: `${note.date}-01-01`,
-    dateModified: `${note.date}-01-01`,
+    datePublished: note.publishedAt,
+    dateModified: note.updatedAt,
     author: {
       "@type": "Person",
       name: "Allen Manoj",
@@ -149,7 +149,7 @@ export default async function WritingNotePage({ params }: { params: Promise<{ sl
               Back to writing →
             </Link>
             <a
-              href="mailto:allen@allenmanoj.com"
+              href="mailto:allenmanoj17@gmail.com"
               className="font-mono text-[13px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-80"
             >
               Start a conversation →

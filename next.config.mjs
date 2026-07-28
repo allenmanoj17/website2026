@@ -7,6 +7,25 @@ const root = dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   compress: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/work/plunk",
+        destination: "/work/airs",
+        permanent: true,
+      },
+      {
+        source: "/work/reporting-automation",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/work/reporting-automation-demo",
+        destination: "/work",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
