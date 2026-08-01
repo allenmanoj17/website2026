@@ -1,0 +1,50 @@
+---
+title: "How I think about AI workflows: inputs, checks, logs, fallbacks, and outputs"
+description: "Why useful AI systems treat the model as one controlled layer inside an operational workflow rather than presenting a prompt as the whole product."
+series: "build-notes"
+publishedAt: "2026-06-21"
+updatedAt: "2026-07-28"
+draft: false
+featured: false
+keywords:
+  - AI workflows
+  - reliable AI systems
+  - operational automation
+relatedSlugs:
+  - visibility-problem
+  - useful-dashboard
+---
+
+Useful AI systems are rarely just prompts. They are workflows with inputs, checks, logs, fallbacks, and outputs that a person or another system can actually use.
+
+## The model is not the workflow
+
+AI work becomes useful when the surrounding system is clear. The model may classify, summarise, score, retrieve, or draft, but the reliability comes from the inputs, checks, logs, fallbacks, and outputs around it.
+
+Without that layer, the result is a demo. With it, the work can become part of an actual process.
+
+## Inputs and checks carry the quality
+
+The best prompt cannot rescue unclear inputs. I think about what the workflow receives, what context is attached, what constraints are enforced, and how the output is checked before a person sees it.
+
+Confidence, source evidence, schema validation, and failure states matter as much as the generated text.
+
+## Outputs need a handoff
+
+A useful AI workflow produces something a person or system can act on: a scored queue, a short brief, an exception list, a draft with evidence, or a structured record.
+
+The output should make uncertainty visible and make the next step obvious. That is where AI shifts from impressive to operational.
+
+## Practical examples
+
+<Checklist>
+
+- A monitoring workflow should keep source evidence beside every AI-generated summary.
+- A classification workflow should log confidence, rejected records, and fallback paths.
+- A writing or outreach workflow should produce a draft with context, not a black-box recommendation.
+
+</Checklist>
+
+## What this changes in a build
+
+The model is treated as one layer inside a maintained system, with clear inputs and a human-readable handoff.

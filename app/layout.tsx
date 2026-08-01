@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import AnalyticsController from "@/components/analytics-controller";
 import Footer from "@/components/footer";
+import MotionController from "@/components/motion-controller";
 import Nav from "@/components/nav";
 import { featuredProjects } from "@/data/site";
 
@@ -9,14 +11,14 @@ const siteUrl = "https://allenmanoj.com";
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: "variable",
   variable: "--font-plex-sans",
   display: "swap",
 });
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["300", "400"],
+  weight: "400",
   variable: "--font-plex-mono",
   display: "swap",
 });
@@ -52,6 +54,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   alternates: {
     canonical: "/",
+    types: {
+      "application/rss+xml": "/rss.xml",
+    },
   },
   robots: {
     index: true,
@@ -176,7 +181,7 @@ export default function RootLayout({
       },
       ...featuredProjects.map((project) => ({
         "@type":
-          project.slug === "lens" || project.slug === "distributionos"
+          project.slug === "lens" || project.slug === "distributionos" || project.slug === "brandscan"
             ? "SoftwareApplication"
             : "CreativeWork",
         "@id": `${siteUrl}/work/${project.slug}#system`,
@@ -189,7 +194,7 @@ export default function RootLayout({
         },
         keywords: project.tags.join(", "),
         applicationCategory:
-          project.slug === "lens" || project.slug === "distributionos"
+          project.slug === "lens" || project.slug === "distributionos" || project.slug === "brandscan"
             ? "BusinessApplication"
             : undefined,
       })),
@@ -209,6 +214,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <AnalyticsController />
+        <MotionController />
         <Nav />
         <main id="main-content">{children}</main>
         <Footer />

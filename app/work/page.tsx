@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, ExternalLink, Layers3 } from "lucide-react";
+import { ArrowRight, ChevronDown, ExternalLink, ShieldCheck } from "lucide-react";
 import ArchiveItem from "@/components/archive-item";
+import PageCta from "@/components/page-cta";
 import ProjectVisual from "@/components/project-visual";
 import Reveal from "@/components/reveal";
 import SectionEye from "@/components/section-eye";
 import { ButtonLink, panelClassName } from "@/components/ui-primitives";
 import {
   archive,
+  deployedProjects,
   featuredProjects,
-  secondaryProjects,
   type Project,
 } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Selected Data & AI Systems",
   description:
-    "Selected systems by Allen Manoj across website intelligence, explainable revenue analytics, grounded content workflows, and evidence-backed monitoring.",
+    "Selected systems by Allen Manoj across website intelligence, explainable revenue analytics, grounded content workflows, visual extraction, and open-source monitoring.",
   alternates: {
     canonical: "/work",
   },
@@ -42,6 +43,10 @@ function ProjectLinks({ project }: { project: Project }) {
     <div className="flex flex-wrap items-center gap-3">
       <Link
         href={project.href}
+        data-analytics-event="project_link_clicked"
+        data-analytics-location="work_index"
+        data-analytics-project={project.slug}
+        data-analytics-link-type="case_study"
         className="inline-flex items-center gap-2 rounded-sm bg-[var(--accent)] px-4 py-2 text-[13px] font-medium text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-90"
       >
         View system notes <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
@@ -51,6 +56,10 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.liveHref}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="project_link_clicked"
+          data-analytics-location="work_index"
+          data-analytics-project={project.slug}
+          data-analytics-link-type="current_build"
           className="inline-flex items-center gap-2 px-1 py-2 font-mono text-[12px] text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-75"
         >
           Open current build <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
@@ -61,11 +70,38 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.sourceHref}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="project_link_clicked"
+          data-analytics-location="work_index"
+          data-analytics-project={project.slug}
+          data-analytics-link-type="source"
           className="inline-flex items-center gap-2 px-1 py-2 font-mono text-[12px] text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-75"
         >
           View source <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
         </a>
       ) : null}
+    </div>
+  );
+}
+
+function ProofFacts({ project, light = false }: { project: Project; light?: boolean }) {
+  const border = light ? "border-[var(--surface-2)]" : "border-[rgba(255,247,238,0.14)]";
+  const label = light ? "text-[var(--accent)]" : "text-[var(--dark-text-2)]";
+  const body = light ? "text-[var(--text-2)]" : "text-[var(--dark-text)]";
+
+  return (
+    <div className={`grid grid-cols-3 gap-5 border-t pt-5 max-[680px]:grid-cols-1 ${border}`}>
+      {[
+        ["Replaces", project.description],
+        ["Produces", project.outcome],
+        ["Evidence", project.currentEvidence.map((evidence) => evidence.label).join(" · ")],
+      ].map(([factLabel, value]) => (
+        <div key={factLabel}>
+          <div className={`font-mono text-[10px] uppercase tracking-[0.08em] ${label}`}>
+            {factLabel}
+          </div>
+          <p className={`mt-2 text-[12px] leading-[1.6] ${body}`}>{value}</p>
+        </div>
+      ))}
     </div>
   );
 }
@@ -91,11 +127,11 @@ function SystemCard({ project, index }: { project: Project; index: number }) {
       <p className="mt-4 text-[15px] font-medium leading-[1.6] text-[var(--dark-text)]">
         {project.outcome}
       </p>
-      <p className="mt-3 text-[14px] leading-[1.7] text-[var(--dark-text-2)]">
-        {project.description}
-      </p>
       <div className="mt-6">
         <ProjectVisual project={project} tone="dark" compact />
+      </div>
+      <div className="mt-5">
+        <ProofFacts project={project} />
       </div>
       <div className="mt-5 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
         {project.architecture.slice(0, 5).map((step, stepIndex) => (
@@ -113,8 +149,8 @@ function SystemCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function WorkPage() {
-  const [lens, airs, distributionOS, sentinel] = featuredProjects;
-  const brandScan = secondaryProjects[0];
+  const [lens, airs, distributionOS, brandScan] = featuredProjects;
+  const [sentinel] = deployedProjects;
   const orderedArchive = [...archive].sort((a, b) => {
     if (a.category === "Personal systems") return -1;
     if (b.category === "Personal systems") return 1;
@@ -138,7 +174,13 @@ export default function WorkPage() {
               <ButtonLink href="#selected-systems">
                 View selected systems <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
               </ButtonLink>
-              <ButtonLink href="/contact" tone="light">
+              <ButtonLink
+                href="/contact"
+                tone="light"
+                data-analytics-event="primary_cta_clicked"
+                data-analytics-location="work_hero"
+                data-analytics-destination="contact"
+              >
                 Start a conversation
               </ButtonLink>
             </div>
@@ -176,9 +218,6 @@ export default function WorkPage() {
                   <p className="mt-5 max-w-[680px] text-[20px] leading-[1.55] text-[var(--dark-text)] max-[640px]:text-[16px]">
                     {lens.outcome}
                   </p>
-                  <p className="mt-4 max-w-[680px] text-[15px] leading-[1.75] text-[var(--dark-text-2)]">
-                    {lens.description}
-                  </p>
                   <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
                     {lens.architecture.map((step, index) => (
                       <span key={step}>
@@ -186,6 +225,9 @@ export default function WorkPage() {
                         {index < lens.architecture.length - 1 ? " →" : ""}
                       </span>
                     ))}
+                  </div>
+                  <div className="mt-6">
+                    <ProofFacts project={lens} />
                   </div>
                 </div>
                 <div className="mt-8">
@@ -214,9 +256,6 @@ export default function WorkPage() {
                   <p className="mt-5 max-w-[700px] text-[17px] font-medium leading-[1.6] text-[var(--dark-text)]">
                     {airs.outcome}
                   </p>
-                  <p className="mt-3 max-w-[700px] text-[14px] leading-[1.7] text-[var(--dark-text-2)]">
-                    {airs.description}
-                  </p>
                   <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
                     {airs.architecture.map((step, index) => (
                       <span key={step}>
@@ -224,6 +263,9 @@ export default function WorkPage() {
                         {index < airs.architecture.length - 1 ? " →" : ""}
                       </span>
                     ))}
+                  </div>
+                  <div className="mt-6">
+                    <ProofFacts project={airs} />
                   </div>
                 </div>
                 <div className="mt-8">
@@ -235,7 +277,7 @@ export default function WorkPage() {
           </Reveal>
 
           <div className="grid grid-cols-2 gap-5 max-[900px]:grid-cols-1">
-            {[distributionOS, sentinel].map((project, index) => (
+            {[distributionOS, brandScan].map((project, index) => (
               <Reveal key={project.slug} delay={(index + 2) * 70} className="h-full">
                 <SystemCard project={project} index={index + 2} />
               </Reveal>
@@ -244,26 +286,51 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4">
+      <section
+        aria-labelledby="sentinel-proof-title"
+        className="bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
+      >
         <div className="mx-auto max-w-[1140px]">
           <Reveal className="grid grid-cols-[minmax(0,1fr)_minmax(280px,390px)] items-center gap-10 max-[860px]:grid-cols-1">
             <div className="min-w-0">
               <div className="mb-5 flex items-center gap-3">
-                <Layers3 size={18} strokeWidth={1.8} className="text-[var(--accent)]" aria-hidden="true" />
-                <SectionEye label="New internal build" />
+                <ShieldCheck size={18} strokeWidth={1.8} className="text-[var(--accent)]" aria-hidden="true" />
+                <SectionEye label="Deployed engineering proof" />
               </div>
-              <h2 className="section-title">{brandScan.name}</h2>
+              <h2 id="sentinel-proof-title" className="section-title">{sentinel.name}</h2>
               <p className="mt-4 max-w-[680px] text-[17px] font-medium leading-[1.55] text-[var(--accent)]">
-                {brandScan.outcome}
+                {sentinel.outcome}
               </p>
-              <p className="body-copy mt-4 max-w-[700px]">{brandScan.description}</p>
-              <div className="mt-7">
-                <ButtonLink href={brandScan.href}>
-                  View BrandScan notes <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
+              <p className="body-copy mt-4 max-w-[700px]">
+                A deployed, open-source monitoring system that preserves source evidence before AI
+                evaluates significance and routes an alert.
+              </p>
+              <div className="mt-7 max-w-[760px]">
+                <ProofFacts project={sentinel} light />
+              </div>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <ButtonLink href={sentinel.href}>
+                  View Sentinel case study <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
                 </ButtonLink>
+                <a
+                  href={sentinel.liveHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-1 py-2 font-mono text-[12px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-75"
+                >
+                  Open current build <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
+                </a>
+                <a
+                  href={sentinel.sourceHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-1 py-2 font-mono text-[12px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-75"
+                >
+                  View source <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
+                </a>
               </div>
             </div>
-            <ProjectVisual project={brandScan} />
+            <ProjectVisual project={sentinel} />
           </Reveal>
         </div>
       </section>
@@ -320,6 +387,12 @@ export default function WorkPage() {
           </div>
         </div>
       </section>
+      <PageCta
+        eyebrow="Have a related system to build?"
+        title="Bring the workflow, evidence, and decision that need to connect."
+        description="A rough description is enough to identify the useful boundary and a sensible first step."
+        subject="Data and AI system conversation"
+      />
     </>
   );
 }

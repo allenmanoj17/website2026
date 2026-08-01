@@ -4,14 +4,14 @@ import SectionEye from "@/components/section-eye";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "Privacy and cookie information for allenmanoj.com, including contact details, analytics status, and cookie use.",
+    "Privacy and analytics information for allenmanoj.com, including email contact, cookieless measurement, and data controls.",
   alternates: {
     canonical: "/privacy",
   },
   openGraph: {
     title: "Privacy — Allen Manoj",
     description:
-      "Privacy and cookie information for allenmanoj.com, including contact details, analytics status, and cookie use.",
+      "Privacy and analytics information for allenmanoj.com, including email contact, cookieless measurement, and data controls.",
     url: "https://allenmanoj.com/privacy",
     siteName: "Allen Manoj",
     images: [
@@ -32,11 +32,15 @@ const items = [
   },
   {
     title: "Analytics",
-    body: "This site does not currently run visitor analytics. If analytics are added later, this page should be updated before collection starts.",
+    body: "When enabled, this site uses PostHog Cloud EU for limited, aggregate product analytics. It records page and homepage-section views, selected CTA and project or article link clicks, article reading milestones, contact starts, outbound profile links, and writing-search length and result count. Search terms, email contents, names, and email addresses are not sent to PostHog.",
   },
   {
     title: "Cookies",
-    body: "This site does not use non-essential tracking cookies. There is no cookie banner because there are no advertising, retargeting, or behavioural analytics cookies currently set by the site.",
+    body: "PostHog is configured in cookieless mode and does not store analytics data in cookies, local storage, or session storage. The site does not use advertising or retargeting cookies.",
+  },
+  {
+    title: "Analytics controls",
+    body: "Automatic interaction capture, person profiles, session recording, heatmaps, surveys, feature flags, and browser-error capture are disabled. Do Not Track is honoured. The PostHog project must also be configured to discard IP addresses before analytics is enabled.",
   },
   {
     title: "External links",

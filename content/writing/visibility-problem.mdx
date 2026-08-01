@@ -1,0 +1,50 @@
+---
+title: "Most teams do not have a data problem. They have a visibility problem."
+description: "Why reporting problems usually begin with unclear inputs, definitions, ownership, freshness, and decision paths rather than missing dashboards."
+series: "build-notes"
+publishedAt: "2026-06-21"
+updatedAt: "2026-07-28"
+draft: false
+featured: true
+keywords:
+  - data visibility
+  - reporting systems
+  - analytics engineering
+relatedSlugs:
+  - useful-dashboard
+  - ai-workflow-systems
+---
+
+When reporting feels broken, the first instinct is usually to ask for another dashboard. I think the better starting point is to ask what the team cannot currently see, trust, or act on.
+
+## The issue is rarely a lack of data
+
+Most teams already have more data than they can comfortably use. The problem is that the data is scattered across tools, named differently in each place, updated on different schedules, and interpreted differently by each team.
+
+When that happens, adding another dashboard rarely helps. It just creates another place to argue about which number is correct.
+
+## Visibility means more than access
+
+A visible system makes the source, definition, owner, freshness, and intended decision clear. It tells someone what changed, why it matters, and what they should inspect next.
+
+That is the difference between a warehouse table that technically exists and a reporting workflow that people can trust.
+
+## The useful work is usually upstream
+
+Before building the final chart, I care about the shape of the inputs: where they come from, how often they move, what breaks, and which assumptions are hidden inside spreadsheet logic.
+
+Good reporting starts with those decisions. The dashboard is the surface. The system underneath is what makes it useful.
+
+## Practical examples
+
+<Checklist>
+
+- A sales team has leads, product usage, and CRM notes, but no shared view of which accounts deserve attention today.
+- A leadership team receives weekly numbers, but each metric is rebuilt by hand and nobody is confident about the source.
+- A product team tracks events, but activation and retention mean different things across analytics, finance, and sales.
+
+</Checklist>
+
+## What this changes in a build
+
+I start with source clarity, definitions, ownership, freshness, and decision paths before I design the final dashboard.

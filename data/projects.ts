@@ -6,6 +6,16 @@ export type ProjectVisual =
   | "evidence"
   | "tokens";
 
+export type ProjectProofAsset = {
+  kind: "image" | "diagram" | "download";
+  title: string;
+  href: string;
+  caption: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+};
+
 export type Project = {
   name: string;
   slug: string;
@@ -33,11 +43,12 @@ export type Project = {
   emailSubject: string;
   audience: string;
   flow: string[];
+  proofAssets?: ProjectProofAsset[];
   analyticsLoop?: string[];
   updatedAt: string;
 };
 
-export const featuredProjects: Project[] = [
+const coreProjects: Project[] = [
   {
     name: "Lens",
     slug: "lens",
@@ -287,11 +298,12 @@ export const featuredProjects: Project[] = [
   },
 ];
 
-export const secondaryProjects: Project[] = [
+const additionalProjects: Project[] = [
   {
     name: "BrandScan",
     slug: "brandscan",
     classification: "Internal accelerator",
+    publicStatus: "Current build",
     description:
       "Replaces manual visual inspection with extracted colours, typography, contrast checks, and design tokens.",
     outcome: "Turns a live website into reusable visual tokens and structured brand signals.",
@@ -307,7 +319,12 @@ export const secondaryProjects: Project[] = [
       "A structured brand board with extracted colours, typography, contrast audit scores, component crops, and exportable implementation tokens.",
     architecture: ["Website", "Crawl", "Extract", "Structure", "Store", "Export"],
     engineeringFocus: ["Headless extraction", "Asynchronous processing", "Reusable token output"],
-    currentEvidence: [{ label: "System notes", href: "/work/brandscan" }],
+    currentEvidence: [
+      { label: "Working website crawl", href: "/work/brandscan" },
+      { label: "Extracted colour and typography results", href: "/work/brandscan#visuals" },
+      { label: "Extracted component results", href: "/work/brandscan#visuals" },
+      { label: "Download sample token output", href: "/projects/brandscan/sample-tokens.json" },
+    ],
     nextValidation: ["Test extraction across a wider range of component and stylesheet patterns."],
     limitations: ["Extraction quality depends on how consistently the source site exposes its visual system."],
     systemBehaviour: [
@@ -325,11 +342,25 @@ export const secondaryProjects: Project[] = [
     emailSubject: "BrandScan system discussion",
     audience: "Teams starting from an existing website or brand that need the visual system turned into reusable implementation tokens.",
     flow: ["Live website", "Visual extraction", "Design tokens"],
-    updatedAt: "2026-07-28",
+    proofAssets: [
+      {
+        kind: "download",
+        title: "Sample design-token output",
+        href: "/projects/brandscan/sample-tokens.json",
+        caption: "A structured JSON export covering colour, typography, spacing, radius, and component roles.",
+      },
+    ],
+    updatedAt: "2026-08-01",
   },
 ];
 
-export const allProjects: Project[] = [...featuredProjects, ...secondaryProjects];
+const [lens, airs, distributionOS, sentinel] = coreProjects;
+const [brandScan] = additionalProjects;
+
+export const featuredProjects: Project[] = [lens, airs, distributionOS, brandScan];
+export const deployedProjects: Project[] = [sentinel];
+export const secondaryProjects: Project[] = deployedProjects;
+export const allProjects: Project[] = [...featuredProjects, ...deployedProjects];
 
 export const services = [
   {

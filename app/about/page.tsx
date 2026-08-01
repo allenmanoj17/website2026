@@ -6,17 +6,15 @@ import {
   Award,
   BookOpen,
   BriefcaseBusiness,
-  CheckCircle2,
   Code2,
-  Database,
   GraduationCap,
   Mail,
   MapPin,
   PenLine,
   Users,
-  Workflow,
 } from "lucide-react";
 import Reveal from "@/components/reveal";
+import PageCta from "@/components/page-cta";
 import SectionEye from "@/components/section-eye";
 import StackSection from "@/components/stack-section";
 import { experience, leadership, recognition } from "@/data/site";
@@ -77,46 +75,6 @@ const links = [
   { label: "Email", href: "mailto:allenmanoj17@gmail.com", external: false, icon: Mail },
 ];
 
-const buildPrinciples = [
-  {
-    title: "Data has to be explainable",
-    text: "Definitions, ownership, freshness, and source logic should be clear before the dashboard is trusted.",
-    icon: Database,
-  },
-  {
-    title: "Automation needs a handoff",
-    text: "A useful workflow does not just run. It tells someone what changed, what failed, and what should happen next.",
-    icon: Workflow,
-  },
-  {
-    title: "Interfaces are part of the system",
-    text: "The output should be usable by the person making the decision, not just technically correct.",
-    icon: CheckCircle2,
-  },
-];
-
-const experienceHighlights = [
-  "Reporting infrastructure",
-  "Research data pipelines",
-  "Product analytics",
-  "Operational dashboards",
-];
-
-function TagList({ tags }: { tags: string[] }) {
-  return (
-    <div className="flex flex-wrap gap-[6px]">
-      {tags.map((tag) => (
-        <span
-          key={tag}
-          className="rounded-sm bg-[var(--surface)] px-[7px] py-[3px] font-mono text-[11px] text-[var(--text-2)]"
-        >
-          {tag}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function ExternalLink({
   label,
   href,
@@ -172,25 +130,20 @@ export default function AboutPage() {
                 interfaces meet. The goal is practical clarity: systems whose inputs, assumptions,
                 failure modes, and outputs are clear enough to trust.
               </p>
-              <div className="mt-8 grid max-w-[720px] grid-cols-2 gap-3 max-[620px]:grid-cols-1">
-                {experienceHighlights.map((item) => (
-                  <div key={item} className="rounded bg-[var(--panel)] px-4 py-3 shadow-[0_10px_28px_rgba(26,23,20,0.035)]">
-                    <div className="flex items-center gap-2 text-[14px] font-medium leading-[1.5] text-[var(--text)]">
-                      <CheckCircle2 size={15} strokeWidth={1.8} className="text-[var(--accent)]" aria-hidden="true" />
-                      <span>{item}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
               <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
                 <Link
                   href="/work"
+                  data-analytics-event="primary_cta_clicked"
+                  data-analytics-location="about_intro"
+                  data-analytics-destination="work"
                   className="inline-flex items-center gap-2 rounded-sm bg-[var(--accent)] px-5 py-[10px] text-[13px] font-medium text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-90"
                 >
                   View selected work <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
                 </Link>
                 <a
                   href="mailto:allenmanoj17@gmail.com"
+                  data-analytics-event="contact_started"
+                  data-analytics-location="about_intro"
                   className="inline-flex items-center gap-2 font-mono text-[13px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-80"
                 >
                   <Mail size={15} strokeWidth={1.8} aria-hidden="true" />
@@ -221,10 +174,10 @@ export default function AboutPage() {
                 <div>
                   <div className="flex items-center gap-2 small-meta">
                     <BriefcaseBusiness size={13} strokeWidth={1.8} aria-hidden="true" />
-                    <span>Current</span>
+                    <span>Work</span>
                   </div>
                   <div className="mt-1 text-[15px] text-[var(--text)]">
-                    Data & systems work at The University of Sydney
+                    Data systems, analytics, applied AI, and operational tools
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-x-4 gap-y-2 pt-2">
@@ -234,27 +187,6 @@ export default function AboutPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[var(--bg)] px-11 py-14 max-[900px]:px-6 max-[420px]:px-4">
-        <div className="mx-auto max-w-[1140px]">
-          <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1">
-            {buildPrinciples.map((item, index) => (
-              <Reveal key={item.title} delay={index * 80}>
-                <article className="rounded bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
-                  <div className="mb-5 flex items-center justify-between gap-4">
-                    <div className="grid size-10 place-items-center rounded-sm bg-[var(--surface)] text-[var(--accent)]">
-                      <item.icon size={19} strokeWidth={1.8} aria-hidden="true" />
-                    </div>
-                    <div className="font-mono text-[12px] text-[var(--accent)]">0{index + 1}</div>
-                  </div>
-                  <h2 className="card-title">{item.title}</h2>
-                  <p className="mt-3 text-[14px] leading-[1.7] text-[var(--text-2)]">{item.text}</p>
-                </article>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
@@ -274,28 +206,29 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">
+          <ol className="border-t border-[var(--surface-2)]">
             {experience.map((item, index) => (
-              <Reveal key={`${item.role}-${item.org}`} delay={index * 70}>
-                <article className="h-full rounded bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
-                  <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h3 className="card-title">{item.role}</h3>
-                      <div className="small-meta mt-1 text-[var(--accent)]">{item.org}</div>
-                    </div>
-                    <div className="flex items-center gap-2 font-mono text-[12px] text-[var(--text-3)]">
-                      <BriefcaseBusiness size={13} strokeWidth={1.8} aria-hidden="true" />
-                      <span>{item.dates}</span>
-                    </div>
+              <li
+                key={`${item.role}-${item.org}`}
+                className="border-b border-[var(--surface-2)]"
+              >
+                <Reveal
+                  delay={index * 70}
+                  className="grid grid-cols-[190px_minmax(0,1fr)] gap-10 py-7 max-[700px]:grid-cols-1 max-[700px]:gap-3"
+                >
+                  <div className="flex items-start gap-2 font-mono text-[12px] text-[var(--text-3)]">
+                    <BriefcaseBusiness size={13} strokeWidth={1.8} aria-hidden="true" />
+                    <span>{item.dates}</span>
                   </div>
-                  <p className="body-copy">{item.description}</p>
-                  <div className="mt-4">
-                    <TagList tags={item.tags.slice(0, 3)} />
+                  <div className="min-w-0">
+                    <h3 className="card-title">{item.role}</h3>
+                    <div className="small-meta mt-1 text-[var(--accent)]">{item.org}</div>
+                    <p className="body-copy mt-4 max-w-[760px]">{item.description}</p>
                   </div>
-                </article>
-              </Reveal>
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -364,53 +297,69 @@ export default function AboutPage() {
 
       <section className="bg-[var(--bg)] px-11 py-16 max-[900px]:px-6 max-[900px]:py-12 max-[420px]:px-4">
         <div className="mx-auto max-w-[1140px]">
-          <Reveal className="mb-9 max-w-[720px]">
-            <SectionEye label="Leadership & community" />
-            <h2 className="section-title">Technical leadership, data communities, and student teams.</h2>
+          <Reveal className="mb-10 max-w-[760px]">
+            <SectionEye label="Leadership, community & recognition" />
+            <h2 className="section-title">
+              Technical leadership, shared learning, and selected project signals.
+            </h2>
           </Reveal>
-          <div className="grid grid-cols-3 gap-4 max-[980px]:grid-cols-1">
-            {leadership.map((item, index) => (
-              <Reveal key={item.title} delay={index * 80}>
-                <article className="h-full rounded bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
-                  <div className="mb-5 flex items-center justify-between gap-4">
+          <div className="grid grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] gap-8 max-[900px]:grid-cols-1">
+            <div className="grid gap-3">
+              {leadership.map((item, index) => (
+                <Reveal key={item.title} delay={index * 70}>
+                  <article className="grid grid-cols-[48px_minmax(0,1fr)] gap-4 rounded bg-[var(--panel)] p-5 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
                     <div className="grid size-10 place-items-center rounded-sm bg-[var(--surface)] text-[var(--accent)]">
                       <Users size={19} strokeWidth={1.8} aria-hidden="true" />
                     </div>
-                    <div className="small-meta text-[var(--accent)]">{item.period}</div>
-                  </div>
-                  <h3 className="card-title mt-3">{item.title}</h3>
-                  <div className="small-meta mt-2">{item.org}</div>
-                  <p className="body-copy mt-4">{item.detail}</p>
-                </article>
-              </Reveal>
-            ))}
+                    <div>
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <h3 className="card-title">{item.title}</h3>
+                        <div className="small-meta text-[var(--accent)]">{item.period}</div>
+                      </div>
+                      <div className="small-meta mt-2">{item.org}</div>
+                      <p className="body-copy mt-3">{item.detail}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={120}>
+              <div className="rounded bg-[var(--surface)] p-5">
+                <h3 className="mb-4 text-[17px] font-medium text-[var(--text)]">
+                  Selected recognition
+                </h3>
+                <div className="grid gap-0">
+                  {recognition.map(([name, detail]) => (
+                    <div
+                      key={name}
+                      className="grid grid-cols-[28px_minmax(0,1fr)] gap-3 border-t border-[var(--surface-2)] py-4"
+                    >
+                      <Award
+                        size={16}
+                        strokeWidth={1.8}
+                        className="mt-0.5 text-[var(--accent)]"
+                        aria-hidden="true"
+                      />
+                      <div>
+                        <div className="text-[15px] font-medium text-[var(--text)]">{name}</div>
+                        <div className="small-meta mt-1">{detail}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="bg-[var(--bg)] px-11 py-16 max-[900px]:px-6 max-[900px]:py-12 max-[420px]:px-4">
-        <Reveal className="mx-auto grid max-w-[1140px] grid-cols-[minmax(240px,300px)_minmax(0,1fr)] gap-12 max-[900px]:grid-cols-1">
-          <div>
-            <SectionEye label="Recognition" />
-            <h2 className="section-title">Selected signals from competitions and project work.</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
-            {recognition.map(([name, detail], index) => (
-              <Reveal key={name} delay={index * 50}>
-                <div className="h-full rounded bg-[var(--panel)] p-5 shadow-[0_12px_36px_rgba(26,23,20,0.04)]">
-                  <div className="mb-4 grid size-9 place-items-center rounded-sm bg-[var(--surface)] text-[var(--accent)]">
-                    <Award size={17} strokeWidth={1.8} aria-hidden="true" />
-                  </div>
-                  <div className="card-title">{name}</div>
-                  <div className="small-meta mt-2">{detail}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-      </section>
-
       <StackSection />
+      <PageCta
+        eyebrow="Projects and relevant roles"
+        title="Looking for someone who can connect data, decisions, and usable software?"
+        description="Share the current problem, role, or system context. A polished brief is not required."
+        subject="Project or role conversation"
+      />
     </>
   );
 }

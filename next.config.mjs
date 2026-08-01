@@ -63,6 +63,9 @@ const nextConfig = {
   turbopack: {
     root,
   },
+  outputFileTracingIncludes: {
+    "/writing/*/opengraph-image": ["./content/writing/*.mdx"],
+  },
 };
 
 export default nextConfig;

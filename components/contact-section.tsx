@@ -8,6 +8,24 @@ const contactIcons = {
   LinkedIn: BriefcaseBusiness,
 };
 
+const processSteps = [
+  {
+    number: "01",
+    title: "Diagnose",
+    text: "Clarify the workflow, evidence, constraints, and decision.",
+  },
+  {
+    number: "02",
+    title: "Build",
+    text: "Connect the data, logic, automation, and interface.",
+  },
+  {
+    number: "03",
+    title: "Validate and hand off",
+    text: "Test the system, document its boundaries, and make ownership clear.",
+  },
+];
+
 export default function ContactSection() {
   const contactLinks = [
     { label: "Email", href: "mailto:allenmanoj17@gmail.com", text: "allenmanoj17@gmail.com" },
@@ -16,7 +34,11 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="bg-[var(--dark)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
+    <section
+      id="contact"
+      data-analytics-section="contact"
+      className="bg-[var(--dark)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4"
+    >
       <div className="mx-auto max-w-[1140px]">
         <Reveal className="grid grid-cols-[minmax(0,1fr)_minmax(280px,380px)] gap-14 max-[860px]:grid-cols-1 max-[640px]:gap-8">
           <div>
@@ -43,7 +65,29 @@ export default function ContactSection() {
                 Send the current workflow, source material, report, or product idea. The rough
                 version is enough to begin.
               </p>
-              <ButtonLink href="mailto:allenmanoj17@gmail.com" className="mt-6 px-[22px]">
+              <div className="mt-6 grid gap-4 border-t border-[rgba(255,247,238,0.14)] pt-5">
+                {processSteps.map((step) => (
+                  <div key={step.number} className="grid grid-cols-[28px_minmax(0,1fr)] gap-3">
+                    <span className="font-mono text-[10px] text-[var(--dark-text-2)]">
+                      {step.number}
+                    </span>
+                    <div>
+                      <div className="text-[13px] font-medium text-[var(--dark-text)]">
+                        {step.title}
+                      </div>
+                      <p className="mt-1 text-[12px] leading-[1.55] text-[var(--dark-text-2)]">
+                        {step.text}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <ButtonLink
+                href="mailto:allenmanoj17@gmail.com"
+                className="mt-6 px-[22px]"
+                data-analytics-event="contact_started"
+                data-analytics-location="home_contact"
+              >
                 <Mail size={15} strokeWidth={1.8} aria-hidden="true" />
                 Start a conversation <ArrowRight size={15} strokeWidth={1.8} className="motion-arrow" aria-hidden="true" />
               </ButtonLink>

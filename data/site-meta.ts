@@ -10,7 +10,7 @@ export const seo = {
     work: {
       title: "Work - Allen Manoj",
       description:
-        "Selected systems across website intelligence, explainable revenue analytics, grounded content workflows, and evidence-backed monitoring.",
+        "Selected systems across website intelligence, explainable revenue analytics, grounded content workflows, visual extraction, and open-source monitoring.",
     },
     about: {
       title: "About - Allen Manoj",

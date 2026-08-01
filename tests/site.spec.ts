@@ -63,8 +63,14 @@ test.describe("project and content contract", () => {
 
       const contents = page.getByRole("navigation", { name: "Case study sections" });
       await expect(contents).toBeVisible();
-      await expect(contents.getByRole("link")).toHaveCount(7);
+      await expect(contents.getByRole("link")).toHaveCount(5);
       await expect(page.locator("#visuals figure")).toHaveCount(2);
+      if (projectPath === "/work/brandscan") {
+        await expect(page.getByText("Design representation", { exact: false })).toHaveCount(0);
+        await expect(page.getByText("Current crawl results", { exact: false })).toBeVisible();
+      } else {
+        await expect(page.getByText("Design representation", { exact: false })).toBeVisible();
+      }
       await expect(page.getByRole("heading", { name: "Current evidence" })).toBeVisible();
       await expect(page.getByRole("heading", { name: "Limitations" })).toBeVisible();
       await expect(page.getByRole("heading", { name: "Next validation" })).toBeVisible();
@@ -80,12 +86,52 @@ test.describe("project and content contract", () => {
       "Lens",
       "Automated Intelligence Revenue System (AIRS)",
       "DistributionOS",
-      "Sentinel",
+      "BrandScan",
     ]);
 
     await expect(systems.getByText("In development", { exact: true }).first()).toBeVisible();
-    await expect(systems.getByRole("heading", { name: "BrandScan" })).toHaveCount(0);
+    await expect(systems.locator('[aria-label$="system flow"]')).toHaveCount(4);
+    await expect(systems.getByText("Evidence", { exact: true })).toHaveCount(0);
+    await expect(systems.getByRole("heading", { name: "Sentinel" })).toHaveCount(0);
     await expect(systems.getByText("Reporting Automation", { exact: false })).toHaveCount(0);
+  });
+
+  test("homepage keeps credibility, writing, and engagement proof concise", async ({ page }) => {
+    await visit(page, "/");
+
+    await expect(
+      page.getByText("Independent data and AI systems builder", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByText("Featured article", { exact: false })).toHaveCount(1);
+    await expect(page.getByText("Diagnose", { exact: true })).toBeVisible();
+    await expect(page.getByText("Build", { exact: true })).toBeVisible();
+    await expect(page.getByText("Validate and hand off", { exact: true })).toBeVisible();
+    await expect(page.getByText("Founder of Lens", { exact: false })).toHaveCount(0);
+  });
+
+  test("writing search ranks fuzzy matches and handles empty results", async ({ page }) => {
+    await visit(page, "/writing");
+
+    const search = page.getByLabel("Search writing");
+    await search.fill("dashbord");
+    await expect(
+      page.getByRole("heading", { name: "What makes a dashboard useful enough to act on" }),
+    ).toBeVisible();
+
+    await search.fill("visibilty");
+    await expect(
+      page.getByRole("heading", {
+        name: "Most teams do not have a data problem. They have a visibility problem.",
+      }),
+    ).toBeVisible();
+    await expect(page.getByText("Featured", { exact: true })).toBeVisible();
+
+    await search.fill("quantum-potato-forecast");
+    await expect(page.getByText("No articles found.")).toBeVisible();
+
+    await page.getByRole("button", { name: "Clear search" }).click();
+    await expect(page.getByText("3 published articles")).toBeVisible();
+    await expect(page.getByText("Read featured article")).toBeVisible();
   });
 
   test("AIRS has no visible development status", async ({ page }) => {
@@ -94,6 +140,36 @@ test.describe("project and content contract", () => {
     await expect(page.getByText("In development", { exact: true })).toHaveCount(0);
     await expect(page.getByRole("heading", { name: "Current evidence" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Next validation" })).toBeVisible();
+  });
+
+  test("work keeps Sentinel as deployed proof outside the featured systems", async ({ page }) => {
+    await visit(page, "/work");
+
+    const featured = page.locator("#selected-systems");
+    await expect(featured.getByRole("heading", { name: "BrandScan" })).toBeVisible();
+    await expect(featured.getByRole("heading", { name: "Sentinel" })).toHaveCount(0);
+    const deployedProof = page.locator('section[aria-labelledby="sentinel-proof-title"]');
+    await expect(deployedProof.getByText("Deployed engineering proof", { exact: true })).toBeVisible();
+    await expect(deployedProof.getByRole("heading", { name: "Sentinel" })).toBeVisible();
+    await expect(deployedProof.getByRole("link", { name: "Open current build" })).toBeVisible();
+    await expect(deployedProof.getByRole("link", { name: "View source" })).toBeVisible();
+  });
+
+  test("BrandScan exposes its current proof and token download", async ({ page, request }) => {
+    await visit(page, "/work/brandscan");
+
+    await expect(page.getByText("Working website crawl", { exact: true })).toBeVisible();
+    await expect(page.getByText("Extracted colour and typography results", { exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Sample design-token output" })).toHaveAttribute(
+      "download",
+      "",
+    );
+
+    const response = await request.get("/projects/brandscan/sample-tokens.json");
+    expect(response.ok()).toBeTruthy();
+    expect(response.headers()["content-type"]).toContain("application/json");
+    const tokens = await response.json();
+    expect(tokens.source.tool).toBe("BrandScan");
   });
 
   test("legacy project routes redirect to their approved destinations", async ({ page }) => {
@@ -145,6 +221,7 @@ test.describe("discovery and metadata endpoints", () => {
 
     expect(body).toContain("https://allenmanoj.com/work/airs");
     expect(body).toContain("https://allenmanoj.com/contact");
+    expect(body).toContain("https://allenmanoj.com/writing/visibility-problem");
     expect(body).not.toContain("/work/plunk");
     expect(body).not.toContain("reporting-automation");
   });
@@ -155,6 +232,8 @@ test.describe("discovery and metadata endpoints", () => {
     const body = await response.text();
 
     expect(body).toContain("Automated Intelligence Revenue System (AIRS)");
+    expect(body).toContain("BrandScan");
+    expect(body).toContain("Deployed engineering proof");
     expect(body).toContain("current evidence");
     expect(body).toContain("allenmanoj17@gmail.com");
     expect(body).not.toContain("Plunk");
@@ -175,6 +254,19 @@ test.describe("discovery and metadata endpoints", () => {
     const response = await request.get("/work/airs/opengraph-image");
     expect(response.ok()).toBeTruthy();
     expect(response.headers()["content-type"]).toContain("image/png");
+  });
+
+  test("writing RSS and article Open Graph images resolve", async ({ request }) => {
+    const feed = await request.get("/rss.xml");
+    expect(feed.ok()).toBeTruthy();
+    expect(feed.headers()["content-type"]).toContain("application/rss+xml");
+    const feedBody = await feed.text();
+    expect(feedBody).toContain("Most teams do not have a data problem");
+    expect(feedBody).toContain("https://allenmanoj.com/writing/visibility-problem");
+
+    const image = await request.get("/writing/visibility-problem/opengraph-image");
+    expect(image.ok()).toBeTruthy();
+    expect(image.headers()["content-type"]).toContain("image/png");
   });
 });
 
@@ -197,6 +289,13 @@ test.describe("navigation and accessibility", () => {
     await expect(button).toHaveAttribute("aria-expanded", "true");
     await page.keyboard.press("Escape");
     await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toHaveCount(0);
+  });
+
+  test("reduced motion reveals all content without transitions", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+
+    await expect(page.locator('[data-reveal][data-visible="false"]')).toHaveCount(0);
   });
 
   for (const route of routes) {

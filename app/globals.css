@@ -12,7 +12,7 @@
   --accent: #891C1C;
   --panel: #FFFDF9;
   --panel-strong: #FFFFFF;
-  --nav-bg: rgba(255,252,249,0.94);
+  --nav-bg: #FFFCF9;
   --soft-shadow: 0 18px 55px rgba(137,28,28,0.08);
   --dark: #18130F;
   --dark-2: #241D17;
@@ -206,12 +206,16 @@ a,
     opacity var(--motion-reveal) var(--motion-ease),
     transform var(--motion-reveal) var(--motion-ease);
   transition-delay: var(--reveal-delay, 0ms);
+}
+
+.motion-reveal[data-visible="false"] {
   will-change: opacity, transform;
 }
 
 .motion-reveal[data-visible="true"] {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 .motion-nav {
@@ -220,10 +224,6 @@ a,
     background-color var(--motion-hover) var(--motion-ease),
     box-shadow var(--motion-hover) var(--motion-ease),
     border-color var(--motion-hover) var(--motion-ease);
-}
-
-.motion-nav[data-scrolled="true"] {
-  box-shadow: 0 14px 42px rgba(26,23,20,0.12);
 }
 
 .motion-link {

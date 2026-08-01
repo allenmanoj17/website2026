@@ -80,7 +80,7 @@ export default function ServiceRow({
           <h3 className="text-[clamp(25px,3vw,36px)] font-light leading-[1.08] tracking-normal">
             {name}
           </h3>
-          <div className="max-h-0 opacity-0 transition-all duration-300 ease-in-out group-hover:mt-5 group-hover:max-h-48 group-hover:opacity-100 group-focus:max-h-48 group-focus:opacity-100 max-[640px]:mt-5 max-[640px]:max-h-none max-[640px]:opacity-100">
+          <div className="max-h-0 opacity-0 transition-all duration-300 ease-in-out group-hover:mt-5 group-hover:max-h-48 group-hover:opacity-100 group-focus:mt-5 group-focus:max-h-48 group-focus:opacity-100 max-[640px]:mt-5 max-[640px]:max-h-none max-[640px]:opacity-100">
             <p
               className={`max-w-[520px] text-[15px] leading-[1.65] ${
                 isDark || isAccent ? "text-[rgba(255,247,238,0.78)]" : "text-[var(--text-2)]"

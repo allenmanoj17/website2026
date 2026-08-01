@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   ArrowRight,
   CheckCircle2,
   CircleAlert,
+  Download,
   ExternalLink,
-  GitBranch,
   Mail,
-  ShieldCheck,
+  ChevronDown,
 } from "lucide-react";
 import CaseStudyGallery from "@/components/case-study-gallery";
 import ProjectVisual from "@/components/project-visual";
@@ -16,18 +17,16 @@ import Reveal from "@/components/reveal";
 import SectionEye from "@/components/section-eye";
 import { ButtonLink } from "@/components/ui-primitives";
 import { caseStudies } from "@/data/case-studies";
-import { allProjects, type Project } from "@/data/site";
+import { allProjects, type Project, type ProjectProofAsset } from "@/data/site";
 
 const siteUrl = "https://allenmanoj.com";
 
 const topics = [
   ["overview", "Overview"],
-  ["challenge", "Challenge"],
   ["architecture", "Architecture"],
   ["visuals", "Visuals"],
-  ["decisions", "Decisions"],
-  ["reliability", "Reliability"],
   ["evidence", "Evidence"],
+  ["conversation", "Conversation"],
 ] as const;
 
 function getProject(slug: string) {
@@ -250,6 +249,52 @@ function EvidenceLinks({ project }: { project: Project }) {
   );
 }
 
+function ProofAssets({ assets }: { assets: ProjectProofAsset[] }) {
+  return (
+    <div className="mt-10 grid grid-cols-2 gap-4 max-[760px]:grid-cols-1">
+      {assets.map((asset) => {
+        if (asset.kind === "download") {
+          return (
+            <a
+              key={asset.href}
+              href={asset.href}
+              download
+              className="group col-span-2 flex items-center justify-between gap-6 rounded bg-[var(--dark-2)] p-5 text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-90 max-[760px]:col-span-1"
+            >
+              <span>
+                <span className="block text-[16px] font-medium">{asset.title}</span>
+                <span className="mt-2 block max-w-[720px] text-[12px] leading-[1.65] text-[var(--dark-text-2)]">
+                  {asset.caption}
+                </span>
+              </span>
+              <Download size={20} strokeWidth={1.7} className="shrink-0" aria-hidden="true" />
+            </a>
+          );
+        }
+
+        return (
+          <figure key={asset.href} className="overflow-hidden rounded bg-[var(--dark-2)]">
+            <Image
+              src={asset.href}
+              alt={asset.alt ?? asset.title}
+              width={asset.width ?? 1200}
+              height={asset.height ?? 750}
+              sizes="(max-width: 760px) 100vw, 50vw"
+              className="h-auto w-full"
+            />
+            <figcaption className="p-5">
+              <span className="block text-[15px] font-medium text-[var(--dark-text)]">{asset.title}</span>
+              <span className="mt-2 block text-[12px] leading-[1.65] text-[var(--dark-text-2)]">
+                {asset.caption}
+              </span>
+            </figcaption>
+          </figure>
+        );
+      })}
+    </div>
+  );
+}
+
 export default async function ProjectPage({
   params,
 }: {
@@ -269,7 +314,7 @@ export default async function ProjectPage({
     "@graph": [
       {
         "@type":
-          project.slug === "lens" || project.slug === "distributionos"
+          project.slug === "lens" || project.slug === "distributionos" || project.slug === "brandscan"
             ? "SoftwareApplication"
             : "CreativeWork",
         "@id": `${siteUrl}/work/${project.slug}#system`,
@@ -286,7 +331,7 @@ export default async function ProjectPage({
         keywords: project.tags.join(", "),
         isAccessibleForFree: true,
         applicationCategory:
-          project.slug === "lens" || project.slug === "distributionos"
+          project.slug === "lens" || project.slug === "distributionos" || project.slug === "brandscan"
             ? "BusinessApplication"
             : undefined,
       },
@@ -346,7 +391,12 @@ export default async function ProjectPage({
                 <p className="lede max-w-[820px]">{project.outcome}</p>
                 <p className="body-copy mt-5 max-w-[780px]">{project.summary}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <ButtonLink href={emailHref}>
+                  <ButtonLink
+                    href={emailHref}
+                    data-analytics-event="contact_started"
+                    data-analytics-location="project_hero"
+                    data-analytics-project={project.slug}
+                  >
                     <Mail size={15} strokeWidth={1.8} aria-hidden="true" />
                     Discuss a similar system
                   </ButtonLink>
@@ -355,6 +405,10 @@ export default async function ProjectPage({
                       href={project.liveHref}
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-analytics-event="project_link_clicked"
+                      data-analytics-location="project_hero"
+                      data-analytics-project={project.slug}
+                      data-analytics-link-type="current_build"
                       className="inline-flex items-center gap-2 rounded-sm bg-[var(--surface)] px-4 py-[10px] text-[13px] font-medium text-[var(--text)] transition-opacity duration-150 hover:opacity-75"
                     >
                       Open current build
@@ -366,6 +420,10 @@ export default async function ProjectPage({
                       href={project.sourceHref}
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-analytics-event="project_link_clicked"
+                      data-analytics-location="project_hero"
+                      data-analytics-project={project.slug}
+                      data-analytics-link-type="source"
                       className="inline-flex items-center gap-2 rounded-sm bg-[var(--surface)] px-4 py-[10px] text-[13px] font-medium text-[var(--text)] transition-opacity duration-150 hover:opacity-75"
                     >
                       View source
@@ -379,18 +437,28 @@ export default async function ProjectPage({
               </Reveal>
             </div>
 
-            <Reveal delay={180} className="mt-14 grid grid-cols-3 border-y border-[var(--surface-2)] max-[720px]:grid-cols-1">
+            <Reveal delay={180} className="mt-14 grid grid-cols-4 border-y border-[var(--surface-2)] max-[900px]:grid-cols-2 max-[620px]:grid-cols-1">
               {[
                 ["My role", caseStudy.role],
                 ["Project stage", caseStudy.stage],
-                ["Scope", caseStudy.scope],
+                ["What it replaces", project.description],
+                [
+                  "Current evidence",
+                  project.currentEvidence.map((evidence) => evidence.label).join(" · "),
+                ],
               ].map(([label, value], index) => (
                 <div
                   key={label}
                   className={`py-5 ${
+                    index === 0
+                      ? "pr-6"
+                      : index % 2 === 0
+                        ? "border-l border-[var(--surface-2)] pl-6 max-[900px]:border-l-0 max-[900px]:border-t max-[900px]:pl-0"
+                        : "border-l border-[var(--surface-2)] pl-6"
+                  } ${index === 3 ? "max-[900px]:border-t" : ""} ${
                     index > 0
-                      ? "border-l border-[var(--surface-2)] pl-6 max-[720px]:border-l-0 max-[720px]:border-t max-[720px]:pl-0"
-                      : "pr-6"
+                      ? "max-[620px]:border-l-0 max-[620px]:border-t max-[620px]:pl-0"
+                      : ""
                   }`}
                 >
                   <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--accent)]">
@@ -405,7 +473,7 @@ export default async function ProjectPage({
 
         <nav
           aria-label="Case study sections"
-          className="sticky top-[74px] z-30 border-y border-[var(--surface-2)] bg-[rgba(255,252,249,0.96)] px-11 backdrop-blur-md max-[900px]:px-6 max-[420px]:px-4"
+          className="sticky top-[74px] z-30 border-y border-[var(--surface-2)] bg-[var(--bg)] px-11 max-[900px]:px-6 max-[420px]:px-4"
         >
           <div className="mx-auto flex max-w-[1140px] gap-6 overflow-x-auto py-3">
             {topics.map(([href, label], index) => (
@@ -452,35 +520,13 @@ export default async function ProjectPage({
         </section>
 
         <section
-          id="challenge"
-          className="scroll-mt-32 bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
-        >
-          <div className="mx-auto max-w-[1140px]">
-            <Reveal>
-              <SectionHeading
-                number="02"
-                label="Challenge"
-                title={caseStudy.challengeTitle}
-                description={caseStudy.challengeLead}
-              />
-            </Reveal>
-            <Reveal delay={90} className="mt-12 grid grid-cols-[minmax(220px,0.35fr)_minmax(0,0.65fr)] gap-10 max-[760px]:grid-cols-1">
-              <h3 className="text-[20px] font-light leading-[1.4] text-[var(--text)]">
-                Design constraints
-              </h3>
-              <NumberedList items={caseStudy.constraints} />
-            </Reveal>
-          </div>
-        </section>
-
-        <section
           id="architecture"
           className="scroll-mt-32 bg-[var(--dark)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
         >
           <div className="mx-auto max-w-[1140px]">
             <Reveal>
               <SectionHeading
-                number="03"
+                number="02"
                 label="Architecture"
                 title={caseStudy.approachTitle}
                 description={project.system}
@@ -515,6 +561,37 @@ export default async function ProjectPage({
                 </div>
               </Reveal>
             ) : null}
+            <Reveal delay={220} className="mt-12 grid gap-3">
+              {[
+                { title: "Design constraints", items: caseStudy.constraints },
+                {
+                  title: "Engineering decisions",
+                  items: caseStudy.decisions.map(
+                    (decision) => `${decision.title}: ${decision.description}`,
+                  ),
+                },
+                {
+                  title: "System behaviour and reliability",
+                  items: [...project.systemBehaviour, ...project.reliability],
+                },
+                { title: "Evaluation approach", items: project.evaluation },
+              ].map((group) => (
+                <details key={group.title} className="group rounded bg-[var(--dark-2)]">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 px-5 py-4 text-[15px] font-medium text-[var(--dark-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]">
+                    {group.title}
+                    <ChevronDown
+                      size={17}
+                      strokeWidth={1.8}
+                      className="shrink-0 transition-transform duration-200 group-open:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </summary>
+                  <div className="px-5 pb-3">
+                    <NumberedList items={group.items} dark />
+                  </div>
+                </details>
+              ))}
+            </Reveal>
           </div>
         </section>
 
@@ -525,10 +602,14 @@ export default async function ProjectPage({
           <div className="mx-auto max-w-[1140px]">
             <Reveal className="mb-10 border-t border-[rgba(255,247,238,0.16)] pt-16">
               <SectionHeading
-                number="04"
+                number="03"
                 label="Visual proof"
                 title="Interface views for the workflow and its decisions."
-                description="These are current design representations and can be replaced with production screenshots as the product matures."
+                description={
+                  project.slug === "brandscan"
+                    ? "Current crawl results and export structure from the working BrandScan workflow."
+                    : "Design representation — replace these views with production screenshots as the product matures."
+                }
                 dark
               />
             </Reveal>
@@ -540,99 +621,7 @@ export default async function ProjectPage({
                 secondaryTitle={caseStudy.secondaryVisualTitle}
                 secondaryCaption={caseStudy.secondaryVisualCaption}
               />
-            </Reveal>
-          </div>
-        </section>
-
-        <section
-          id="decisions"
-          className="scroll-mt-32 bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
-        >
-          <div className="mx-auto max-w-[1140px]">
-            <Reveal>
-              <SectionHeading
-                number="05"
-                label="Key decisions"
-                title={caseStudy.approachTitle}
-                description={caseStudy.approachLead}
-              />
-            </Reveal>
-            <div className="mt-12 grid grid-cols-2 gap-x-10 gap-y-8 max-[760px]:grid-cols-1">
-              {caseStudy.decisions.map((decision, index) => (
-                <Reveal key={decision.title} delay={index * 60}>
-                  <div className="border-t border-[var(--surface-2)] pt-5">
-                    <div className="font-mono text-[10px] text-[var(--accent)]">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-                    <h3 className="mt-3 text-[19px] font-medium leading-[1.4] text-[var(--text)]">
-                      {decision.title}
-                    </h3>
-                    <p className="mt-3 text-[14px] leading-[1.7] text-[var(--text-2)]">
-                      {decision.description}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-
-            <Reveal className="mt-14 grid grid-cols-[220px_minmax(0,1fr)] gap-10 border-t border-[var(--surface-2)] pt-8 max-[760px]:grid-cols-1">
-              <h3 className="text-[20px] font-light leading-[1.4] text-[var(--text)]">Build notes</h3>
-              <div className="grid grid-cols-3 gap-5 max-[900px]:grid-cols-1">
-                {caseStudy.buildNotes.map((note) => (
-                  <div key={note.title}>
-                    <h4 className="text-[15px] font-medium text-[var(--text)]">{note.title}</h4>
-                    <p className="mt-3 text-[13px] leading-[1.7] text-[var(--text-2)]">
-                      {note.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        <section
-          id="reliability"
-          className="scroll-mt-32 bg-[var(--surface)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
-        >
-          <div className="mx-auto max-w-[1140px]">
-            <Reveal>
-              <SectionHeading
-                number="06"
-                label="Behaviour and reliability"
-                title="The system around the feature is part of the product."
-              />
-            </Reveal>
-            <div className="mt-12 grid grid-cols-2 gap-12 max-[820px]:grid-cols-1">
-              <Reveal>
-                <div>
-                  <div className="mb-5 flex items-center gap-3 text-[var(--accent)]">
-                    <GitBranch size={19} strokeWidth={1.8} aria-hidden="true" />
-                    <h3 className="text-[18px] font-medium text-[var(--text)]">System behaviour</h3>
-                  </div>
-                  <NumberedList items={project.systemBehaviour} />
-                </div>
-              </Reveal>
-              <Reveal delay={80}>
-                <div>
-                  <div className="mb-5 flex items-center gap-3 text-[var(--accent)]">
-                    <ShieldCheck size={19} strokeWidth={1.8} aria-hidden="true" />
-                    <h3 className="text-[18px] font-medium text-[var(--text)]">Reliability considerations</h3>
-                  </div>
-                  <NumberedList items={project.reliability} />
-                </div>
-              </Reveal>
-            </div>
-            <Reveal className="mt-14 grid grid-cols-[220px_minmax(0,1fr)] gap-10 border-t border-[var(--surface-2)] pt-8 max-[760px]:grid-cols-1">
-              <div>
-                <h3 className="text-[20px] font-light leading-[1.4] text-[var(--text)]">
-                  Evaluation approach
-                </h3>
-                <p className="mt-3 text-[13px] leading-[1.65] text-[var(--text-3)]">
-                  What should be tested before stronger claims are made.
-                </p>
-              </div>
-              <NumberedList items={project.evaluation} />
+              {project.proofAssets?.length ? <ProofAssets assets={project.proofAssets} /> : null}
             </Reveal>
           </div>
         </section>
@@ -644,7 +633,7 @@ export default async function ProjectPage({
           <div className="mx-auto max-w-[1140px]">
             <Reveal>
               <SectionHeading
-                number="07"
+                number="04"
                 label="Evidence and boundaries"
                 title="What exists now, what remains limited, and what comes next."
                 description="This separation is intentional: planned evaluation and reliability work is not presented as completed evidence."
@@ -676,11 +665,14 @@ export default async function ProjectPage({
           </div>
         </section>
 
-        <section className="bg-[var(--dark)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4">
+        <section
+          id="conversation"
+          className="scroll-mt-32 bg-[var(--dark)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
+        >
           <div className="mx-auto max-w-[1140px]">
             <Reveal className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-8 max-[760px]:grid-cols-1">
               <div>
-                <SectionEye label="Discuss a similar system" dark />
+                <SectionEye label="05 · Discuss a similar system" dark />
                 <h2 className="section-title section-title-dark max-w-[760px]">
                   Send the current workflow, source material, report, or product idea.
                 </h2>
@@ -689,7 +681,12 @@ export default async function ProjectPage({
                   the problem boundary and useful next step.
                 </p>
               </div>
-              <ButtonLink href={emailHref}>
+              <ButtonLink
+                href={emailHref}
+                data-analytics-event="contact_started"
+                data-analytics-location="project_end"
+                data-analytics-project={project.slug}
+              >
                 <Mail size={15} strokeWidth={1.8} aria-hidden="true" />
                 Discuss a similar system
               </ButtonLink>
@@ -697,6 +694,10 @@ export default async function ProjectPage({
             <Reveal className="mt-12 border-t border-[rgba(255,247,238,0.16)] pt-8">
               <Link
                 href={nextProject.href}
+                data-analytics-event="project_link_clicked"
+                data-analytics-location="next_case_study"
+                data-analytics-project={nextProject.slug}
+                data-analytics-link-type="case_study"
                 className="group flex items-end justify-between gap-6 text-[var(--dark-text)]"
               >
                 <span>

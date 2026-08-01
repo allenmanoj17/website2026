@@ -5,22 +5,26 @@ import SectionEye from "@/components/section-eye";
 const groups = [
   {
     title: "Data engineering",
-    description: "SQL · Python · dbt · BigQuery · PostgreSQL · Supabase · data contracts · quality checks",
+    description:
+      "Warehousing, transformation, source contracts, scheduled pipelines, and data-quality checks.",
     icon: Database,
   },
   {
     title: "Analytics and BI",
-    description: "Metric design · Power BI · Tableau · Looker Studio · Excel · cohorts · experimentation",
+    description:
+      "Metric design, reporting systems, cohort analysis, experimentation, and decision-ready dashboards.",
     icon: LayoutDashboard,
   },
   {
     title: "ML and applied AI",
-    description: "XGBoost · SHAP · scikit-learn · TensorFlow · evaluation · LLM workflows · retrieval",
+    description:
+      "Explainable modelling, retrieval, evaluation, grounded generation, and human-review workflows.",
     icon: Bot,
   },
   {
     title: "Systems and interfaces",
-    description: "FastAPI · Next.js · React · TypeScript · Airflow · AWS · APIs · monitoring · automation",
+    description:
+      "APIs, orchestration, monitoring, operational interfaces, and maintainable internal products.",
     icon: PackageCheck,
   },
 ];

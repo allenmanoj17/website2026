@@ -13,13 +13,16 @@ Allen Manoj is a data and AI systems builder based in Sydney, Australia. He turn
 - [Lens](https://allenmanoj.com/work/lens): website intelligence system in development. Its current design separates deterministic, heuristic, and AI-assisted diagnostics and keeps evidence, confidence, affected URLs, and rule versions attached to findings.
 - [Automated Intelligence Revenue System (AIRS)](https://allenmanoj.com/work/airs): revenue intelligence system design connecting BigQuery, dbt, explainable scoring, SHAP, Airflow, and an operational sales interface. Evaluation and reliability work that is not yet evidenced is labelled as next validation.
 - [DistributionOS](https://allenmanoj.com/work/distributionos): evidence-first content system in development for privacy-bounded source retrieval, grounded drafting, comparative editing, style learning, visual generation, publishing, and behavioural analytics.
-- [Sentinel](https://allenmanoj.com/work/sentinel): open-source monitoring system that separates deterministic change detection from AI significance evaluation and preserves source evidence before routing alerts. [Source](https://github.com/allenmanoj17/sentinel).
+- [BrandScan](https://allenmanoj.com/work/brandscan): current website-extraction build that turns a working crawl into colour, typography, component, contrast, and reusable design-token outputs. A sample token export is available from the case study.
+
+## Deployed engineering proof
+- [Sentinel](https://allenmanoj.com/work/sentinel): deployed, open-source monitoring system that separates deterministic change detection from AI significance evaluation and preserves source evidence before routing alerts. [Current build](https://sentinel-ai.up.railway.app/) · [Source](https://github.com/allenmanoj17/sentinel).
 
 ## Evidence policy
 Project pages separate current system design, current evidence, limitations, and next validation. The site does not present planned benchmarks, evaluation results, or reliability tests as completed evidence.
 
 ## Earlier technical work
-The Work page includes a compact section covering BrandScan, Morsel, Haven, AWS data infrastructure, applied machine learning, analytics, and research systems.
+The Work page includes a compact section covering Morsel, Haven, AWS data infrastructure, applied machine learning, analytics, and research systems.
 
 ## Writing
 - [Most teams do not have a data problem. They have a visibility problem.](https://allenmanoj.com/writing/visibility-problem)

@@ -5,7 +5,6 @@ import {
   ArrowRight,
   BookOpen,
   CheckCircle2,
-  Mail,
 } from "lucide-react";
 import ContactSection from "@/components/contact-section";
 import ProjectVisual from "@/components/project-visual";
@@ -13,7 +12,11 @@ import Reveal from "@/components/reveal";
 import SectionEye from "@/components/section-eye";
 import ServiceRow from "@/components/service-row";
 import { ButtonLink, panelClassName } from "@/components/ui-primitives";
-import { featuredProjects, services, writingNotes, type Project } from "@/data/site";
+import { featuredProjects, services, type Project } from "@/data/site";
+import {
+  getFeaturedArticle,
+  getPublishedArticles,
+} from "@/lib/writing";
 
 export const metadata: Metadata = {
   title: {
@@ -58,56 +61,87 @@ const helpItems = services.map((service) => ({
       "03": "Useful when product or revenue teams need to know where attention should go next.",
       "04": "Useful when an AI idea needs clear inputs, checks, logs, fallbacks, and handoff.",
       "05": "Useful when the underlying data work needs an interface people can use directly.",
-    }[service.number] ?? "",
+  }[service.number] ?? "",
 }));
 
-function HomeProjectCard({ project, index }: { project: Project; index: number }) {
+function HomeProjectCard({
+  project,
+  index,
+  wide = false,
+}: {
+  project: Project;
+  index: number;
+  wide?: boolean;
+}) {
   return (
     <article
       className={panelClassName(
         "dark",
-        "motion-project-card flex h-full flex-col justify-between p-6 shadow-[0_18px_46px_rgba(0,0,0,0.16)]",
+        `motion-project-card grid h-full overflow-hidden shadow-[0_18px_46px_rgba(0,0,0,0.16)] ${
+          wide
+            ? "grid-cols-[minmax(0,0.9fr)_minmax(300px,1.1fr)] max-[780px]:grid-cols-1"
+            : "grid-rows-[auto_1fr]"
+        }`,
       )}
     >
-      <div>
-        <div className="mb-5 flex items-center justify-between gap-4 font-mono text-[11px] text-[var(--dark-text-2)]">
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <span>{project.classification}</span>
-        </div>
-        <h3 className="card-title card-title-dark">{project.name}</h3>
-        <p className="mt-3 text-[14px] font-medium leading-[1.6] text-[var(--dark-text)]">
-          {project.outcome}
-        </p>
-        <p className="mt-4 text-[14px] leading-[1.7] text-[var(--dark-text-2)]">
-          {project.description}
-        </p>
-        <div className="mt-5">
+      {!wide ? (
+        <div className="px-5 pt-5">
           <ProjectVisual project={project} tone="dark" compact />
         </div>
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.architecture.slice(0, 4).map((step, stepIndex) => (
-            <span
-              key={step}
-              className="font-mono text-[11px] leading-[1.5] text-[var(--dark-text-2)]"
-            >
+      ) : null}
+      <div className="flex min-w-0 flex-col justify-between p-7 max-[640px]:p-5">
+        <div>
+        <div className="mb-5 flex items-center justify-between gap-4 font-mono text-[11px] text-[var(--dark-text-2)]">
+          <span>{String(index).padStart(2, "0")}</span>
+          <span className="text-right">
+            {project.classification}
+            {project.publicStatus ? ` · ${project.publicStatus}` : ""}
+          </span>
+        </div>
+        <h3 className="text-[clamp(22px,2.4vw,32px)] font-light leading-[1.15] text-[var(--dark-text)]">
+          {project.name}
+        </h3>
+        <p className="mt-4 text-[15px] font-medium leading-[1.6] text-[var(--dark-text)]">
+          {project.outcome}
+        </p>
+
+        <div
+          className="mt-6 flex flex-wrap gap-x-2 gap-y-2 border-t border-[rgba(255,247,238,0.14)] pt-5 font-mono text-[11px] text-[var(--dark-text-2)]"
+          aria-label={`${project.name} system flow`}
+        >
+          {project.flow.map((step, flowIndex) => (
+            <span key={step}>
               {step}
-              {stepIndex < Math.min(project.architecture.length, 4) - 1 ? " →" : ""}
+              {flowIndex < project.flow.length - 1 ? " →" : ""}
             </span>
           ))}
         </div>
       </div>
-      <Link
-        href={project.href}
-        className="mt-6 inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--accent)] px-4 py-2 font-mono text-[12px] text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-90"
-      >
-        View system notes <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
-      </Link>
+        <Link
+          href={project.href}
+          data-analytics-event="project_link_clicked"
+          data-analytics-location="home_selected_systems"
+          data-analytics-project={project.slug}
+          data-analytics-link-type="case_study"
+          className="mt-7 inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--accent)] px-4 py-2 font-mono text-[12px] text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-90"
+        >
+          View case study <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
+        </Link>
+      </div>
+      {wide ? (
+        <div className="self-stretch p-5 pl-0 max-[780px]:p-5 max-[780px]:pt-0">
+          <ProjectVisual project={project} tone="dark" compact />
+        </div>
+      ) : null}
     </article>
   );
 }
 
 export default function Home() {
   const [lens, ...supportingProjects] = featuredProjects;
+  const writing = getPublishedArticles();
+  const featuredNote = getFeaturedArticle(writing)!;
+  const otherNotes = writing.filter((article) => article.slug !== featuredNote.slug).slice(0, 2);
 
   return (
     <>
@@ -115,7 +149,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[1140px]">
           <div className="min-w-0 max-w-[940px]">
             <Reveal className="mb-7 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--accent)]">
-              Sydney · Independent data and AI systems builder
+              Independent data and AI systems builder
             </Reveal>
             <Reveal delay={90}>
               <h1 className="hero-statement mb-6 max-w-[940px]">
@@ -130,10 +164,21 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={250} className="mb-8 flex flex-wrap items-center gap-3">
-              <ButtonLink href="/contact">
+              <ButtonLink
+                href="/contact"
+                data-analytics-event="primary_cta_clicked"
+                data-analytics-location="home_hero"
+                data-analytics-destination="contact"
+              >
                 Start a conversation <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
               </ButtonLink>
-              <ButtonLink href="#systems" tone="light">
+              <ButtonLink
+                href="#systems"
+                tone="light"
+                data-analytics-event="primary_cta_clicked"
+                data-analytics-location="home_hero"
+                data-analytics-destination="selected_systems"
+              >
                 View selected work
               </ButtonLink>
             </Reveal>
@@ -143,6 +188,7 @@ export default function Home() {
 
       <section
         id="systems"
+        data-analytics-section="selected_systems"
         className="bg-[var(--dark)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4"
       >
         <div className="mx-auto max-w-[1140px]">
@@ -154,7 +200,7 @@ export default function Home() {
               </h2>
               <p className="body-copy body-copy-dark mt-3 max-w-[620px]">
                 Four systems spanning website intelligence, revenue decisions, grounded content,
-                and evidence-backed monitoring.
+                and reusable visual systems.
               </p>
             </div>
             <ButtonLink href="/work">View all work →</ButtonLink>
@@ -177,50 +223,55 @@ export default function Home() {
                   <h3 className="text-[clamp(42px,7vw,82px)] font-light leading-[0.95] tracking-normal text-[var(--dark-text)]">
                     {lens.name}
                   </h3>
-                  <p className="mt-5 max-w-[680px] text-[20px] leading-[1.55] text-[var(--dark-text)] max-[640px]:text-[16px]">
+                  <p className="mt-6 max-w-[680px] text-[20px] leading-[1.55] text-[var(--dark-text)] max-[640px]:text-[16px]">
                     {lens.outcome}
                   </p>
-                  <p className="mt-4 max-w-[680px] text-[15px] leading-[1.75] text-[var(--dark-text-2)]">
-                    {lens.description}
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
-                    {lens.architecture.map((step, index) => (
+                  <div
+                    className="mt-7 flex flex-wrap gap-x-2 gap-y-2 border-t border-[rgba(255,247,238,0.14)] pt-5 font-mono text-[11px] text-[var(--dark-text-2)]"
+                    aria-label={`${lens.name} system flow`}
+                  >
+                    {lens.flow.map((step, flowIndex) => (
                       <span key={step}>
                         {step}
-                        {index < lens.architecture.length - 1 ? " →" : ""}
+                        {flowIndex < lens.flow.length - 1 ? " →" : ""}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <ButtonLink href="/work/lens">View Lens architecture →</ButtonLink>
-                  {lens.liveHref ? (
-                    <a
-                      href={lens.liveHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-1 py-2 text-[13px] font-medium text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-75"
-                    >
-                      Open current build →
-                    </a>
-                  ) : null}
+                <div className="mt-8">
+                  <ButtonLink
+                    href="/work/lens"
+                    data-analytics-event="project_link_clicked"
+                    data-analytics-location="home_selected_systems"
+                    data-analytics-project="lens"
+                    data-analytics-link-type="case_study"
+                  >
+                    View Lens case study →
+                  </ButtonLink>
                 </div>
               </div>
               <ProjectVisual project={lens} tone="dark" />
             </article>
           </Reveal>
 
-          <div className="grid grid-cols-3 gap-5 max-[980px]:grid-cols-1">
+          <div className="grid grid-cols-2 gap-5 max-[780px]:grid-cols-1">
             {supportingProjects.map((project, index) => (
-              <Reveal key={project.slug} delay={(index + 1) * 80} className="h-full">
-                <HomeProjectCard project={project} index={index + 2} />
+              <Reveal
+                key={project.slug}
+                delay={(index + 1) * 80}
+                className={`h-full ${index === 2 ? "col-span-2 max-[780px]:col-span-1" : ""}`}
+              >
+                <HomeProjectCard project={project} index={index + 2} wide={index === 2} />
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[var(--bg)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4">
+      <section
+        data-analytics-section="where_i_can_help"
+        className="bg-[var(--bg)] px-11 py-24 max-[900px]:px-6 max-[900px]:py-16 max-[420px]:px-4"
+      >
         <div className="mx-auto max-w-[1140px]">
           <Reveal className="mb-10 grid grid-cols-[minmax(0,620px)_minmax(260px,1fr)] items-end gap-12 max-[860px]:grid-cols-1">
             <div>
@@ -236,7 +287,15 @@ export default function Home() {
           </Reveal>
           <div className="grid grid-cols-3 gap-3 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">
             {helpItems.map((service, index) => (
-              <Reveal key={service.number} delay={index * 60} className="h-full">
+              <Reveal
+                key={service.number}
+                delay={index * 60}
+                className={`h-full ${
+                  index === helpItems.length - 1
+                    ? "col-span-2 max-[640px]:col-span-1"
+                    : ""
+                }`}
+              >
                 <ServiceRow
                   {...service}
                   variant={index === 0 ? "accent" : index === 2 || index === 4 ? "dark" : "light"}
@@ -244,26 +303,14 @@ export default function Home() {
                 />
               </Reveal>
             ))}
-            <Reveal delay={320} className="h-full">
-              <div className="flex min-h-[300px] flex-col justify-between rounded border border-[var(--surface-2)] bg-[var(--panel)] p-6 shadow-[0_12px_36px_rgba(26,23,20,0.04)] max-[640px]:min-h-[230px] max-[640px]:p-5">
-                <div>
-                  <div className="mb-6 grid size-12 place-items-center rounded-sm bg-[var(--surface)] text-[var(--accent)]">
-                    <Mail size={23} strokeWidth={1.8} aria-hidden="true" />
-                  </div>
-                  <p className="text-[clamp(24px,3vw,34px)] font-light leading-[1.15] text-[var(--text)]">
-                    Bring the workflow before it has a polished brief.
-                  </p>
-                </div>
-                <ButtonLink href="/contact" className="mt-8 w-fit">
-                  Start a conversation <ArrowRight size={15} strokeWidth={1.8} aria-hidden="true" />
-                </ButtonLink>
-              </div>
-            </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="bg-[var(--dark)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4">
+      <section
+        data-analytics-section="writing"
+        className="bg-[var(--dark)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
+      >
         <div className="mx-auto max-w-[1140px]">
           <Reveal className="mb-9 flex flex-wrap items-end justify-between gap-5">
             <div>
@@ -274,34 +321,63 @@ export default function Home() {
             </div>
             <ButtonLink href="/writing">Read all writing →</ButtonLink>
           </Reveal>
-          <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1">
-            {writingNotes.map((note, index) => (
-              <Reveal key={note.slug} delay={index * 70}>
+          <div className="grid grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] gap-4 max-[820px]:grid-cols-1">
+            <Reveal>
+              <Link
+                href={`/writing/${featuredNote.slug}`}
+                data-analytics-event="article_link_clicked"
+                data-analytics-location="home_writing_featured"
+                data-analytics-article={featuredNote.slug}
+                className="group flex h-full min-h-[280px] flex-col justify-between rounded bg-[var(--dark-2)] p-7 max-[640px]:min-h-[240px] max-[640px]:p-5"
+              >
+                <div>
+                  <div className="mb-5 flex items-center gap-2 font-mono text-[11px] text-[var(--dark-text-2)]">
+                    <BookOpen size={15} strokeWidth={1.8} aria-hidden="true" />
+                    Featured article · {featuredNote.readingMinutes} min read
+                  </div>
+                  <h3 className="max-w-[720px] text-[clamp(24px,3.5vw,38px)] font-light leading-[1.18] text-[var(--dark-text)]">
+                    {featuredNote.title}
+                  </h3>
+                  <p className="mt-4 max-w-[680px] text-[14px] leading-[1.7] text-[var(--dark-text-2)]">
+                    {featuredNote.description}
+                  </p>
+                </div>
+                <span className="mt-7 inline-flex items-center gap-2 font-mono text-[12px] text-[var(--dark-text)]">
+                  Read note <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
+                </span>
+              </Link>
+            </Reveal>
+            <div className="grid gap-3">
+              {otherNotes.map((note, index) => (
+                <Reveal key={note.slug} delay={(index + 1) * 70}>
                 <Link
                   href={`/writing/${note.slug}`}
-                  className="group flex h-full min-h-[230px] flex-col justify-between rounded bg-[var(--dark-2)] p-6"
+                  data-analytics-event="article_link_clicked"
+                  data-analytics-location="home_writing_list"
+                  data-analytics-article={note.slug}
+                  className="group flex h-full min-h-[134px] flex-col justify-between rounded border border-[rgba(255,247,238,0.12)] p-5"
                 >
-                  <div>
-                    <div className="mb-5 flex items-center gap-2 font-mono text-[11px] text-[var(--dark-text-2)]">
-                      <BookOpen size={15} strokeWidth={1.8} aria-hidden="true" />
-                      Note · {note.date}
-                    </div>
-                    <h3 className="card-title card-title-dark">{note.title}</h3>
-                    <p className="mt-4 text-[14px] leading-[1.65] text-[var(--dark-text-2)]">
-                      {note.description}
-                    </p>
+                  <div className="font-mono text-[10px] text-[var(--dark-text-2)]">
+                    {note.seriesLabel} · {note.readingMinutes} min
                   </div>
-                  <span className="mt-6 inline-flex items-center gap-2 font-mono text-[12px] text-[var(--dark-text)]">
-                    Read note <ArrowRight size={14} strokeWidth={1.8} aria-hidden="true" />
+                  <h3 className="mt-3 text-[16px] font-medium leading-[1.45] text-[var(--dark-text)]">
+                    {note.title}
+                  </h3>
+                  <span className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] text-[var(--dark-text-2)]">
+                    Read <ArrowRight size={13} strokeWidth={1.8} aria-hidden="true" />
                   </span>
                 </Link>
               </Reveal>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4">
+      <section
+        data-analytics-section="about"
+        className="bg-[var(--bg)] px-11 py-20 max-[900px]:px-6 max-[900px]:py-14 max-[420px]:px-4"
+      >
         <div className="mx-auto max-w-[1140px]">
           <Reveal className="grid grid-cols-[220px_minmax(0,1fr)] items-center gap-12 rounded bg-[var(--panel)] p-8 shadow-[0_12px_36px_rgba(26,23,20,0.04)] max-[760px]:grid-cols-1 max-[640px]:p-5">
             <div className="relative aspect-square w-full overflow-hidden rounded bg-[var(--surface)] max-[760px]:max-w-[220px]">

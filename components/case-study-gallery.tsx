@@ -183,7 +183,7 @@ function SentinelVisual() {
 
 function TokenVisual() {
   return (
-    <div className="grid grid-cols-[0.9fr_1.1fr] gap-4 max-[520px]:grid-cols-1">
+    <div className="grid grid-cols-3 gap-4 max-[760px]:grid-cols-1">
       <div className="rounded bg-[rgba(255,247,238,0.07)] p-5 text-[var(--dark-text)]">
         <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
           <Palette size={14} strokeWidth={1.8} aria-hidden="true" />
@@ -201,6 +201,25 @@ function TokenVisual() {
               <div className="mt-2 font-mono text-[10px] text-[var(--dark-text-2)]">{label}</div>
             </div>
           ))}
+        </div>
+      </div>
+      <div className="rounded bg-[rgba(255,247,238,0.07)] p-5 text-[var(--dark-text)]">
+        <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--dark-text-2)]">
+          Typography and components
+        </div>
+        <div className="mt-5 border-b border-[rgba(255,247,238,0.1)] pb-4">
+          <div className="text-[20px] font-light">IBM Plex Sans</div>
+          <div className="mt-2 font-mono text-[10px] text-[var(--dark-text-2)]">
+            body · heading · interface
+          </div>
+        </div>
+        <div className="mt-4 grid gap-3">
+          <span className="w-fit rounded-sm bg-[var(--accent)] px-3 py-2 text-[11px] font-medium">
+            Primary action
+          </span>
+          <span className="w-fit rounded-sm border border-[rgba(255,247,238,0.18)] px-3 py-2 text-[11px]">
+            Secondary action
+          </span>
         </div>
       </div>
       <div className="rounded bg-[rgba(255,247,238,0.07)] p-5 text-[var(--dark-text)]">

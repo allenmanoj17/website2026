@@ -81,6 +81,8 @@ export default function ContactPage() {
               </div>
               <a
                 href="mailto:allenmanoj17@gmail.com"
+                data-analytics-event="contact_started"
+                data-analytics-location="contact_direct_email"
                 className="mt-3 block text-[clamp(18px,2.4vw,28px)] font-light leading-[1.3] text-[var(--dark-text)] transition-opacity duration-150 hover:opacity-75"
               >
                 allenmanoj17@gmail.com
@@ -88,6 +90,8 @@ export default function ContactPage() {
               <ButtonLink
                 href="mailto:allenmanoj17@gmail.com?subject=System%20conversation"
                 className="mt-6"
+                data-analytics-event="contact_started"
+                data-analytics-location="contact_hero"
               >
                 <Mail size={15} strokeWidth={1.8} aria-hidden="true" />
                 Start a conversation
@@ -132,6 +136,9 @@ export default function ContactPage() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics-event="outbound_link_clicked"
+                  data-analytics-location="contact_profiles"
+                  data-analytics-destination={link.label.toLowerCase()}
                   className="group inline-flex items-center gap-2 py-2 text-[13px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-75"
                 >
                   <link.icon size={15} strokeWidth={1.8} aria-hidden="true" />

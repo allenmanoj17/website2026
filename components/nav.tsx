@@ -14,17 +14,9 @@ const links = [
 
 export default function Nav() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > window.innerHeight * 0.72);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
 
   useEffect(() => {
     if (!menuOpen) {
@@ -68,8 +60,7 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-3 z-50 px-4 max-[480px]:top-2 max-[480px]:px-3">
       <div
-        className="motion-nav mx-auto max-w-[1180px] rounded border border-transparent bg-[var(--nav-bg)] px-7 shadow-[0_10px_35px_rgba(26,23,20,0.08)] backdrop-blur-md max-[900px]:px-5 max-[420px]:px-4"
-        data-scrolled={scrolled ? "true" : "false"}
+        className="motion-nav mx-auto max-w-[1180px] rounded border border-transparent bg-[var(--nav-bg)] px-7 shadow-[0_10px_35px_rgba(26,23,20,0.08)] max-[900px]:px-5 max-[420px]:px-4"
       >
         <div className="flex min-h-[52px] items-center justify-between gap-4">
           <Link
@@ -91,6 +82,8 @@ export default function Nav() {
             ))}
             <a
               href="mailto:allenmanoj17@gmail.com"
+              data-analytics-event="contact_started"
+              data-analytics-location="desktop_nav"
               className="motion-button inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-sm bg-[var(--accent)] px-[15px] py-[7px] text-[12px] font-medium text-[var(--dark-text)] hover:opacity-90"
             >
               <Mail size={14} strokeWidth={1.8} aria-hidden="true" />
@@ -117,7 +110,7 @@ export default function Nav() {
               ref={menuRef}
               id="mobile-navigation"
               aria-label="Mobile navigation"
-              className="absolute right-4 top-14 grid w-[min(320px,calc(100vw-1.5rem))] gap-1 rounded bg-[var(--nav-bg)] p-4 shadow-[0_16px_42px_rgba(26,23,20,0.12)] backdrop-blur-md max-[480px]:right-3"
+              className="absolute right-4 top-14 grid w-[min(320px,calc(100vw-1.5rem))] gap-1 rounded bg-[var(--nav-bg)] p-4 shadow-[0_16px_42px_rgba(26,23,20,0.12)] max-[480px]:right-3"
             >
               {links.map((link) => (
                 <Link
@@ -131,6 +124,8 @@ export default function Nav() {
               ))}
               <a
                 href="mailto:allenmanoj17@gmail.com"
+                data-analytics-event="contact_started"
+                data-analytics-location="mobile_nav"
                 className="mt-2 inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--accent)] px-4 py-2 text-[13px] font-medium text-[var(--dark-text)]"
               >
                 <Mail size={14} strokeWidth={1.8} aria-hidden="true" />

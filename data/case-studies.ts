@@ -310,10 +310,10 @@ export const caseStudies: Record<string, CaseStudyContent> = {
     ],
     primaryVisualTitle: "Extracted token board",
     primaryVisualCaption:
-      "A proposed review surface for colour, typography, contrast, and component samples.",
+      "The current review surface groups extracted colour, typography, contrast, and component results from a website crawl.",
     secondaryVisualTitle: "Token export",
     secondaryVisualCaption:
-      "Structured outputs remain implementation-ready while preserving the decisions made during review.",
+      "The reviewed output is converted into reusable JSON, CSS, and Tailwind-friendly implementation tokens.",
     buildNotes: [
       {
         title: "Crawl coverage",

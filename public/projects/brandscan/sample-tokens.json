@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "source": {
+    "tool": "BrandScan",
+    "type": "sample-export",
+    "note": "Representative token output from a completed website crawl. Review extracted values before implementation."
+  },
+  "colour": {
+    "action": { "$type": "color", "$value": "#891C1C" },
+    "text": { "$type": "color", "$value": "#1A1714" },
+    "textSecondary": { "$type": "color", "$value": "#514841" },
+    "surface": { "$type": "color", "$value": "#F4F0EA" },
+    "background": { "$type": "color", "$value": "#FFFCF9" }
+  },
+  "typography": {
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "IBM Plex Sans",
+        "fontSize": "16px",
+        "fontWeight": 400,
+        "lineHeight": 1.65
+      }
+    },
+    "code": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "IBM Plex Mono",
+        "fontSize": "12px",
+        "fontWeight": 400,
+        "lineHeight": 1.5
+      }
+    }
+  },
+  "radius": {
+    "control": { "$type": "dimension", "$value": "2px" },
+    "panel": { "$type": "dimension", "$value": "4px" }
+  },
+  "component": {
+    "buttonPrimary": {
+      "background": "{colour.action}",
+      "foreground": "#FFF7EE",
+      "radius": "{radius.control}"
+    }
+  }
+}
