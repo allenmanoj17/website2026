@@ -1,3 +1,9 @@
+import {
+  browserDoNotTrackEnabled,
+  canUseAnalytics,
+  getAnalyticsConsent,
+} from "@/lib/analytics-consent";
+
 export const analyticsEvents = [
   "$pageview",
   "primary_cta_clicked",
@@ -8,6 +14,7 @@ export const analyticsEvents = [
   "section_viewed",
   "outbound_link_clicked",
   "writing_search_used",
+  "web_vital_measured",
 ] as const;
 
 export type AnalyticsEvent = (typeof analyticsEvents)[number];
@@ -34,6 +41,12 @@ const allowedProperties: Record<AnalyticsEvent, ReadonlySet<string>> = {
   section_viewed: withCommonProperties(["section_id"]),
   outbound_link_clicked: withCommonProperties(["location", "destination"]),
   writing_search_used: withCommonProperties(["query_length", "result_count"]),
+  web_vital_measured: withCommonProperties([
+    "metric_name",
+    "metric_value",
+    "metric_unit",
+    "rating",
+  ]),
 };
 
 const cleanString = (value: string) => value.trim().slice(0, 80);
@@ -141,19 +154,11 @@ export function sanitiseAnalyticsProperties(
   return sanitised;
 }
 
-const enabled =
+const configured =
   process.env.NEXT_PUBLIC_POSTHOG_ENABLED === "true" &&
   Boolean(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN);
 
 let clientPromise: Promise<typeof import("posthog-js").default | null> | null = null;
-
-function doNotTrackEnabled() {
-  if (typeof navigator === "undefined") {
-    return false;
-  }
-
-  return navigator.doNotTrack === "1";
-}
 
 function withoutQuery(value: unknown) {
   if (typeof value !== "string") {
@@ -193,7 +198,11 @@ function getPageContext() {
 }
 
 async function getAnalyticsClient() {
-  if (!enabled || typeof window === "undefined" || doNotTrackEnabled()) {
+  if (
+    !configured ||
+    typeof window === "undefined" ||
+    !canUseAnalytics(getAnalyticsConsent(), browserDoNotTrackEnabled())
+  ) {
     return null;
   }
 
@@ -212,7 +221,10 @@ async function getAnalyticsClient() {
         disable_surveys: true,
         advanced_disable_feature_flags: true,
         person_profiles: "never",
-        cookieless_mode: "always",
+        persistence: "localStorage+cookie",
+        cookie_expiration: 90,
+        // The project anonymises IPs after it derives permitted aggregate geography.
+        ip: true,
         respect_dnt: true,
         before_send: (capture) => {
           if (!capture || !analyticsEvents.includes(capture.event as AnalyticsEvent)) {
@@ -230,12 +242,39 @@ async function getAnalyticsClient() {
           return capture;
         },
       });
+      posthog.opt_in_capturing();
 
       return posthog;
     });
   }
 
   return clientPromise;
+}
+
+function clearPostHogStorage() {
+  if (typeof window === "undefined") return;
+
+  for (let index = window.localStorage.length - 1; index >= 0; index -= 1) {
+    const key = window.localStorage.key(index);
+    if (key?.startsWith("ph_") || key?.startsWith("__ph_opt_in_out_")) {
+      window.localStorage.removeItem(key);
+    }
+  }
+
+  for (const cookie of document.cookie.split(";")) {
+    const name = cookie.trim().split("=")[0];
+    if (name.startsWith("ph_") || name.startsWith("__ph_opt_in_out_")) {
+      document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+    }
+  }
+}
+
+export async function revokeAnalyticsCapture() {
+  const client = await clientPromise;
+  client?.opt_out_capturing();
+  client?.reset();
+  clearPostHogStorage();
+  clientPromise = null;
 }
 
 export async function trackAnalyticsEvent(

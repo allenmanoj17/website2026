@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import AnalyticsController from "@/components/analytics-controller";
+import AnalyticsConsent from "@/components/analytics-consent";
 import Footer from "@/components/footer";
 import MotionController from "@/components/motion-controller";
 import Nav from "@/components/nav";
@@ -215,6 +216,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <AnalyticsController />
+        <AnalyticsConsent />
         <MotionController />
         <Nav />
         <main id="main-content">{children}</main>

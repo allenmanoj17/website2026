@@ -1,7 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ANALYTICS_CONSENT_EVENT, getAnalyticsConsent } from "@/lib/analytics-consent";
 import {
   analyticsEvents,
   deriveTrafficAttribution,
@@ -15,13 +16,21 @@ function isAnalyticsEvent(value: string | undefined): value is AnalyticsEvent {
 
 export default function AnalyticsController() {
   const pathname = usePathname();
+  const [consentVersion, setConsentVersion] = useState(0);
 
   useEffect(() => {
+    const handleConsentChange = () => setConsentVersion((value) => value + 1);
+    window.addEventListener(ANALYTICS_CONSENT_EVENT, handleConsentChange);
+    return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, handleConsentChange);
+  }, []);
+
+  useEffect(() => {
+    if (getAnalyticsConsent() !== "granted") return;
     void trackAnalyticsEvent("$pageview", {
       page_path: pathname,
       ...deriveTrafficAttribution(window.location.href, document.referrer),
     });
-  }, [pathname]);
+  }, [pathname, consentVersion]);
 
   useEffect(() => {
     const seen = new Set<string>();
@@ -44,7 +53,7 @@ export default function AnalyticsController() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [pathname]);
+  }, [pathname, consentVersion]);
 
   useEffect(() => {
     const article = document.querySelector<HTMLElement>("[data-analytics-article-body]");
@@ -90,7 +99,34 @@ export default function AnalyticsController() {
       window.removeEventListener("resize", scheduleMeasure);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [pathname]);
+  }, [pathname, consentVersion]);
+
+  useEffect(() => {
+    if (getAnalyticsConsent() !== "granted") return;
+
+    let cancelled = false;
+    void import("web-vitals").then(({ onCLS, onINP, onLCP }) => {
+      if (cancelled) return;
+
+      const report = (metric: { name: "CLS" | "INP" | "LCP"; value: number; rating: string }) => {
+        const isCls = metric.name === "CLS";
+        void trackAnalyticsEvent("web_vital_measured", {
+          metric_name: metric.name,
+          metric_value: Math.round(metric.value * (isCls ? 1000 : 1)),
+          metric_unit: isCls ? "thousandths" : "ms",
+          rating: metric.rating,
+        });
+      };
+
+      onCLS(report);
+      onINP(report);
+      onLCP(report);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname, consentVersion]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {

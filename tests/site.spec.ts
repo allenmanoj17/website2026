@@ -271,6 +271,19 @@ test.describe("discovery and metadata endpoints", () => {
 });
 
 test.describe("navigation and accessibility", () => {
+  test("analytics requires a choice and cookie preferences can be reopened", async ({ page }) => {
+    await visit(page, "/");
+
+    await expect(page.getByRole("heading", { name: "Analytics preferences" })).toBeVisible();
+    await page.getByRole("button", { name: "Reject" }).click();
+    await expect(page.getByRole("heading", { name: "Analytics preferences" })).toHaveCount(0);
+
+    await page.getByRole("button", { name: "Cookie preferences" }).click();
+    await expect(page.getByRole("heading", { name: "Cookie preferences" })).toBeVisible();
+    await page.getByRole("button", { name: "Allow analytics" }).click();
+    await expect(page.getByRole("heading", { name: "Cookie preferences" })).toHaveCount(0);
+  });
+
   test("skip link reaches the main landmark", async ({ page }) => {
     await visit(page, "/");
     await page.keyboard.press("Tab");

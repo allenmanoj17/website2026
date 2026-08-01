@@ -5,6 +5,10 @@ import {
   getPageType,
   sanitiseAnalyticsProperties,
 } from "../lib/analytics";
+import {
+  canUseAnalytics,
+  parseAnalyticsConsent,
+} from "../lib/analytics-consent";
 
 test("analytics properties are restricted to each event schema", () => {
   assert.deepEqual(
@@ -82,4 +86,43 @@ test("page types support useful funnel breakdowns", () => {
   assert.equal(getPageType("/work/lens"), "project_case_study");
   assert.equal(getPageType("/writing/privacy-first-analytics"), "article");
   assert.equal(getPageType("/contact"), "contact");
+});
+
+test("analytics stays disabled until a valid consent grant", () => {
+  assert.equal(canUseAnalytics("unknown"), false);
+  assert.equal(canUseAnalytics("denied"), false);
+  assert.equal(canUseAnalytics("granted"), true);
+  assert.equal(canUseAnalytics("granted", true), false);
+});
+
+test("expired or malformed consent preferences are ignored", () => {
+  const now = 1_000;
+  assert.equal(parseAnalyticsConsent(null, now), "unknown");
+  assert.equal(parseAnalyticsConsent("not-json", now), "unknown");
+  assert.equal(
+    parseAnalyticsConsent(JSON.stringify({ value: "granted", expiresAt: 999 }), now),
+    "unknown",
+  );
+  assert.equal(
+    parseAnalyticsConsent(JSON.stringify({ value: "granted", expiresAt: 1_001 }), now),
+    "granted",
+  );
+});
+
+test("Core Web Vitals accept only the approved aggregate fields", () => {
+  assert.deepEqual(
+    sanitiseAnalyticsProperties("web_vital_measured", {
+      metric_name: "LCP",
+      metric_value: 1842.5,
+      metric_unit: "ms",
+      rating: "good",
+      url: "https://allenmanoj.com/work/lens?private=value",
+    }),
+    {
+      metric_name: "LCP",
+      metric_value: 1843,
+      metric_unit: "ms",
+      rating: "good",
+    },
+  );
 });

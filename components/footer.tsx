@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AnalyticsPreferencesButton from "@/components/analytics-preferences-button";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -106,7 +107,10 @@ export default function Footer() {
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] leading-[1.6] text-[var(--text-3)]">
             <p>© 2026 Allen Manoj</p>
-            <p>Sydney, Australia</p>
+            <div className="flex items-center gap-4">
+              <AnalyticsPreferencesButton />
+              <p>Sydney, Australia</p>
+            </div>
           </div>
         </div>
       </div>
