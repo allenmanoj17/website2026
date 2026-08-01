@@ -29,14 +29,7 @@ export default function Footer() {
   return (
     <footer className="bg-[var(--bg)] px-11 pb-7 pt-10 max-[900px]:px-6 max-[420px]:px-4">
       <div className="mx-auto max-w-[1140px] border-t border-[var(--surface-2)] pt-7">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="eyebrow">Allen Manoj</div>
-          <p className="text-[13px] leading-[1.6] text-[var(--text-2)]">
-            Available for selected data and AI systems projects and relevant roles
-          </p>
-        </div>
-
-        <div className="mt-6 grid grid-cols-[minmax(220px,0.7fr)_minmax(0,1.3fr)] gap-10 border-t border-[var(--surface-2)] pt-6 max-[760px]:grid-cols-1 max-[760px]:gap-7">
+        <div className="grid grid-cols-[minmax(220px,0.7fr)_minmax(0,1.3fr)] gap-10 max-[760px]:grid-cols-1 max-[760px]:gap-7">
           <div>
             <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-3)]">
               Direct email
