@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ANALYTICS_CONSENT_EVENT, getAnalyticsConsent } from "@/lib/analytics-consent";
 import {
   analyticsEvents,
@@ -32,8 +32,14 @@ export default function AnalyticsController() {
     });
   }, [pathname, consentVersion]);
 
+  const seenSectionsRef = useRef<Set<string>>(new Set());
+
   useEffect(() => {
-    const seen = new Set<string>();
+    seenSectionsRef.current = new Set();
+  }, [pathname]);
+
+  useEffect(() => {
+    const seen = seenSectionsRef.current;
     const sections = document.querySelectorAll<HTMLElement>("[data-analytics-section]");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -55,6 +61,12 @@ export default function AnalyticsController() {
     return () => observer.disconnect();
   }, [pathname, consentVersion]);
 
+  const sentMilestonesRef = useRef<Set<number>>(new Set());
+
+  useEffect(() => {
+    sentMilestonesRef.current = new Set();
+  }, [pathname]);
+
   useEffect(() => {
     const article = document.querySelector<HTMLElement>("[data-analytics-article-body]");
     const articleSlug = article?.dataset.analyticsArticleBody;
@@ -63,7 +75,7 @@ export default function AnalyticsController() {
     }
 
     const milestones = [50, 90];
-    const sent = new Set<number>();
+    const sent = sentMilestonesRef.current;
     let frame = 0;
 
     const measure = () => {

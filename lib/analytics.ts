@@ -220,6 +220,10 @@ const propertiesToStrip = [
   "$session_entry_url",
 ];
 
+function isLocalEnvironment() {
+  return typeof window !== "undefined" && window.location.hostname === "localhost";
+}
+
 function getPageContext() {
   if (typeof window === "undefined") {
     return {};
@@ -228,7 +232,7 @@ function getPageContext() {
   return {
     page_path: window.location.pathname,
     page_type: getPageType(window.location.pathname),
-    site_environment: window.location.hostname === "localhost" ? "local" : "production",
+    site_environment: isLocalEnvironment() ? "local" : "production",
   };
 }
 
@@ -236,6 +240,7 @@ async function getAnalyticsClient() {
   if (
     !configured ||
     typeof window === "undefined" ||
+    isLocalEnvironment() ||
     !canUseAnalytics(getAnalyticsConsent(), browserDoNotTrackEnabled())
   ) {
     return null;
