@@ -185,6 +185,41 @@ function originOnly(value: unknown) {
   }
 }
 
+// PostHog's GeoIP enrichment and SDK defaults attach more than the site discloses on /privacy
+// (precise coordinates/postal code, full user agent, screen size, per-pageview scroll depth).
+// These never reach the dashboards and are stripped before the event leaves the browser so the
+// privacy page's "aggregate-only geography, no behavioural tracking" claim stays true in practice.
+const propertiesToStrip = [
+  "$geoip_latitude",
+  "$geoip_longitude",
+  "$geoip_postal_code",
+  "$geoip_accuracy_radius",
+  "$geoip_continent_code",
+  "$geoip_continent_name",
+  "$geoip_country_code",
+  "$geoip_time_zone",
+  "$raw_user_agent",
+  "$browser_version",
+  "$os_version",
+  "$screen_height",
+  "$screen_width",
+  "$viewport_height",
+  "$viewport_width",
+  "$prev_pageview_last_content",
+  "$prev_pageview_last_content_percentage",
+  "$prev_pageview_last_scroll",
+  "$prev_pageview_last_scroll_percentage",
+  "$prev_pageview_max_content",
+  "$prev_pageview_max_content_percentage",
+  "$prev_pageview_max_scroll",
+  "$prev_pageview_max_scroll_percentage",
+  "$prev_pageview_pathname",
+  "$prev_pageview_duration",
+  "$prev_pageview_id",
+  "$session_entry_referrer",
+  "$session_entry_url",
+];
+
 function getPageContext() {
   if (typeof window === "undefined") {
     return {};
@@ -239,6 +274,11 @@ async function getAnalyticsClient() {
           capture.properties.$initial_referrer = originOnly(
             capture.properties.$initial_referrer,
           );
+
+          for (const key of propertiesToStrip) {
+            delete capture.properties[key];
+          }
+
           return capture;
         },
       });
