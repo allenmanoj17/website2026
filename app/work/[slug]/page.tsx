@@ -141,14 +141,6 @@ function ArchitectureFlow({ project }: { project: Project }) {
             {String(index + 1).padStart(2, "0")}
           </div>
           <div className="mt-6 text-[15px] font-medium leading-[1.4]">{step}</div>
-          {index < project.architecture.length - 1 ? (
-            <ArrowRight
-              size={15}
-              strokeWidth={1.8}
-              className="absolute -right-[9px] top-1/2 z-10 text-[var(--dark-text-2)] max-[420px]:hidden"
-              aria-hidden="true"
-            />
-          ) : null}
         </div>
       ))}
     </div>
@@ -551,14 +543,19 @@ export default async function ProjectPage({
                 <h3 className="text-[18px] font-medium text-[var(--dark-text)]">
                   Behavioural product loop
                 </h3>
-                <div className="mt-5 flex flex-wrap gap-x-2 gap-y-3 font-mono text-[11px] text-[var(--dark-text-2)]">
+                <ol className="mt-5 grid grid-cols-4 gap-3 max-[780px]:grid-cols-2">
                   {project.analyticsLoop.map((step, index) => (
-                    <span key={step}>
+                    <li
+                      key={step}
+                      className="border-t border-[rgba(255,247,238,0.16)] pt-3 font-mono text-[11px] leading-[1.55] text-[var(--dark-text-2)]"
+                    >
+                      <span className="mr-2 text-[var(--dark-text)]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
                       {step}
-                      {index < project.analyticsLoop!.length - 1 ? " →" : ""}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </Reveal>
             ) : null}
             <Reveal delay={220} className="mt-12 grid gap-3">

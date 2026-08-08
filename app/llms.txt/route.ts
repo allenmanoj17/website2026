@@ -1,17 +1,17 @@
 export function GET() {
   const body = `# Allen Manoj
 
-Allen Manoj is a data and AI systems builder based in Sydney, Australia. He turns fragmented data into decision systems people can inspect, trust, and act on.
+Allen Manoj is a data and AI systems builder based in Sydney, Australia. He makes reporting, monitoring, and AI-assisted work easier to use when the raw data is scattered or the current process is still manual.
 
 ## Core work
-- Analytics infrastructure and data contracts
-- Revenue intelligence and explainable scoring
-- Applied AI workflows with evidence and evaluation boundaries
-- Monitoring systems and operational interfaces
+- Data pipelines and contracts that stop reporting work living in exports
+- Account prioritisation that explains who may need attention and why
+- AI workflows with evidence, checks, fallback paths, and clear boundaries
+- Monitoring systems and internal tools that make the next action obvious
 
 ## Featured systems
 - [Lens](https://allenmanoj.com/work/lens): website intelligence system in development. Its current design separates deterministic, heuristic, and AI-assisted diagnostics and keeps evidence, confidence, affected URLs, and rule versions attached to findings.
-- [Automated Intelligence Revenue System (AIRS)](https://allenmanoj.com/work/airs): revenue intelligence system design connecting BigQuery, dbt, explainable scoring, SHAP, Airflow, and an operational sales interface. Evaluation and reliability work that is not yet evidenced is labelled as next validation.
+- [Automated Intelligence Revenue System (AIRS)](https://allenmanoj.com/work/airs): a system design for spotting accounts losing momentum from product usage, CRM, and billing signals, then explaining which accounts deserve attention. It connects BigQuery, dbt, explainable scoring, SHAP, Airflow, and an operational sales interface. Evaluation and reliability work that is not yet evidenced is labelled as next validation.
 - [DistributionOS](https://allenmanoj.com/work/distributionos): evidence-first content system in development for privacy-bounded source retrieval, grounded drafting, comparative editing, style learning, visual generation, publishing, and behavioural analytics.
 - [BrandScan](https://allenmanoj.com/work/brandscan): current website-extraction build that turns a working crawl into colour, typography, component, contrast, and reusable design-token outputs. A sample token export is available from the case study.
 

@@ -31,14 +31,15 @@ export const metadata: Metadata = {
     template: "%s — Allen Manoj",
   },
   description:
-    "Allen Manoj turns fragmented data into decision systems people trust, spanning analytics infrastructure, revenue intelligence, applied AI, and operational software.",
+    "Pipelines, dashboards, and AI workflows that replace manual reporting, surface account risk, and give teams a clearer next move.",
   keywords: [
     "Allen Manoj",
     "data systems builder Sydney",
     "AI systems builder Sydney",
     "analytics engineering",
     "data infrastructure",
-    "revenue intelligence",
+    "account prioritisation",
+    "account health scoring",
     "AI workflows",
     "monitoring systems",
     "decision systems",
@@ -77,7 +78,7 @@ export const metadata: Metadata = {
     siteName: "Allen Manoj",
     title: "Allen Manoj — Data & AI Systems Builder",
     description:
-      "Decision systems spanning data infrastructure, analytics, applied AI, monitoring, and operational software.",
+      "Pipelines, dashboards, and AI workflows built to replace manual work and clarify the next decision.",
     images: [
       {
         url: "/opengraph-image",
@@ -130,12 +131,12 @@ export default function RootLayout({
           addressCountry: "AU",
         },
         knowsAbout: [
-          "Data infrastructure",
-          "Analytics engineering",
-          "Revenue intelligence",
-          "Applied AI workflows",
+          "Data pipelines and contracts",
+          "Reporting systems",
+          "Account health and prioritisation",
+          "Evidence-grounded AI workflows",
           "Monitoring systems",
-          "Decision interfaces",
+          "Internal data tools",
         ],
       },
       {
@@ -157,12 +158,12 @@ export default function RootLayout({
         url: siteUrl,
         areaServed: ["Australia", "Sydney", "Remote"],
         serviceType: [
-          "Data infrastructure",
-          "Analytics systems",
-          "Revenue intelligence",
-          "Applied AI workflows",
+          "Data pipelines and contracts",
+          "Reporting systems",
+          "Account prioritisation",
+          "Evidence-grounded AI workflows",
           "Monitoring systems",
-          "Operational software",
+          "Internal data tools",
         ],
         provider: {
           "@id": `${siteUrl}/#person`,

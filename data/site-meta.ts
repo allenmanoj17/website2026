@@ -5,12 +5,12 @@ export const seo = {
     home: {
       title: "Allen Manoj - Data & AI Systems Builder",
       description:
-        "Decision systems spanning analytics infrastructure, revenue intelligence, applied AI, monitoring, and operational software.",
+        "Pipelines, dashboards, and AI workflows that replace manual reporting, surface account risk, and give teams a clearer next move.",
     },
     work: {
       title: "Work - Allen Manoj",
       description:
-        "Selected systems across website intelligence, explainable revenue analytics, grounded content workflows, visual extraction, and open-source monitoring.",
+        "Website diagnostics, account-prioritisation design, grounded content workflows, visual token extraction, and open-source monitoring builds.",
     },
     about: {
       title: "About - Allen Manoj",
@@ -20,7 +20,7 @@ export const seo = {
     writing: {
       title: "Writing - Allen Manoj",
       description:
-        "Articles and notes on data systems, AI workflows, machine learning, and building things.",
+        "Practical notes on reporting people use, AI workflows that hold up, and the work behind useful products.",
     },
   },
   keywords: [

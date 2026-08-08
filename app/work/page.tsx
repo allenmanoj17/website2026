@@ -17,7 +17,7 @@ import {
 export const metadata: Metadata = {
   title: "Selected Data & AI Systems",
   description:
-    "Selected systems by Allen Manoj across website intelligence, explainable revenue analytics, grounded content workflows, visual extraction, and open-source monitoring.",
+    "Website diagnostics, account-prioritisation design, grounded content workflows, visual token extraction, and open-source monitoring builds by Allen Manoj.",
   alternates: {
     canonical: "/work",
   },
@@ -133,14 +133,9 @@ function SystemCard({ project, index }: { project: Project; index: number }) {
       <div className="mt-5">
         <ProofFacts project={project} />
       </div>
-      <div className="mt-5 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
-        {project.architecture.slice(0, 5).map((step, stepIndex) => (
-          <span key={step}>
-            {step}
-            {stepIndex < Math.min(project.architecture.length, 5) - 1 ? " →" : ""}
-          </span>
-        ))}
-      </div>
+      <p className="mt-5 font-mono text-[11px] leading-[1.65] text-[var(--dark-text-2)]">
+        Built around {project.architecture.slice(0, 5).join(", ")}.
+      </p>
       <div className="mt-auto pt-7">
         <ProjectLinks project={project} />
       </div>
@@ -163,12 +158,11 @@ export default function WorkPage() {
         <div className="mx-auto max-w-[1140px]">
           <Reveal className="max-w-[920px]">
             <SectionEye label="Work" />
-            <h1 className="page-title mb-6">
-              Selected systems, with the decisions and boundaries visible.
-            </h1>
+            <h1 className="page-title mb-6">The work behind the claims.</h1>
             <p className="lede max-w-[780px]">
-              Each project shows what the system replaces, how information moves through it, what
-              exists now, and what still needs validation.
+              These are the builds I would show someone before asking them to trust me with
+              theirs: what was frustrating, what I made, what exists now, and where the edges
+              still are.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="#selected-systems">
@@ -196,7 +190,7 @@ export default function WorkPage() {
           <Reveal className="mb-10 max-w-[760px]">
             <SectionEye label="Current systems" dark />
             <h2 className="section-title section-title-dark">
-              Four different problems, treated as complete systems.
+              Four problems I care about solving properly.
             </h2>
           </Reveal>
 
@@ -218,14 +212,9 @@ export default function WorkPage() {
                   <p className="mt-5 max-w-[680px] text-[20px] leading-[1.55] text-[var(--dark-text)] max-[640px]:text-[16px]">
                     {lens.outcome}
                   </p>
-                  <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
-                    {lens.architecture.map((step, index) => (
-                      <span key={step}>
-                        {step}
-                        {index < lens.architecture.length - 1 ? " →" : ""}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="mt-6 font-mono text-[11px] leading-[1.65] text-[var(--dark-text-2)]">
+                    Built around {lens.architecture.join(", ")}.
+                  </p>
                   <div className="mt-6">
                     <ProofFacts project={lens} />
                   </div>
@@ -256,14 +245,9 @@ export default function WorkPage() {
                   <p className="mt-5 max-w-[700px] text-[17px] font-medium leading-[1.6] text-[var(--dark-text)]">
                     {airs.outcome}
                   </p>
-                  <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] text-[var(--dark-text-2)]">
-                    {airs.architecture.map((step, index) => (
-                      <span key={step}>
-                        {step}
-                        {index < airs.architecture.length - 1 ? " →" : ""}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="mt-6 font-mono text-[11px] leading-[1.65] text-[var(--dark-text-2)]">
+                    Built around {airs.architecture.join(", ")}.
+                  </p>
                   <div className="mt-6">
                     <ProofFacts project={airs} />
                   </div>

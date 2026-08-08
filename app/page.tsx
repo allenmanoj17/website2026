@@ -23,14 +23,14 @@ export const metadata: Metadata = {
     absolute: "Allen Manoj — Data & AI Systems Builder in Sydney",
   },
   description:
-    "Allen Manoj designs data infrastructure, revenue intelligence, reporting systems, and applied AI workflows from source systems to operational interfaces.",
+    "Allen Manoj builds pipelines, dashboards, and AI workflows that replace manual reporting, surface account risk, and give teams a clearer next move.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Allen Manoj — Data & AI Systems Builder",
     description:
-      "Decision systems spanning data infrastructure, analytics, applied AI, monitoring, and operational software.",
+      "Pipelines, dashboards, and AI workflows built to replace manual work and clarify the next decision.",
     url: "https://allenmanoj.com",
     siteName: "Allen Manoj",
     images: [
@@ -48,19 +48,19 @@ const helpItems = services.map((service) => ({
   ...service,
   description:
     {
-      "01": "Clean pipelines, warehouse models, scheduled jobs, and quality checks.",
-      "02": "Automated dashboards, summaries, alerts, and reporting delivery workflows.",
-      "03": "Funnels, cohorts, lead scoring, conversion reporting, and revenue signals.",
-      "04": "Classification, retrieval, monitoring, scoring, and human review paths.",
-      "05": "Diagnostic portals, admin tools, monitoring screens, and data-backed products.",
+      "01": "Bring reporting out of exports and into one dependable place.",
+      "02": "Stop rebuilding the same weekly report from scratch.",
+      "03": "Spot accounts losing momentum before the signal gets buried.",
+      "04": "Put checks, context, and a human handoff around an AI task.",
+      "05": "Give a useful interface to data work that currently lives in scripts.",
     }[service.number] ?? service.description,
   usefulWhen:
     {
-      "01": "Useful when reporting still depends on exports, spreadsheet logic, or disconnected tools.",
-      "02": "Useful when the same report is rebuilt every week and still needs a meeting to explain it.",
-      "03": "Useful when product or revenue teams need to know where attention should go next.",
-      "04": "Useful when an AI idea needs clear inputs, checks, logs, fallbacks, and handoff.",
-      "05": "Useful when the underlying data work needs an interface people can use directly.",
+      "01": "Useful when someone still starts Monday by downloading CSVs.",
+      "02": "Useful when the weekly report takes longer to explain than to read.",
+      "03": "Useful when product, CRM, and billing signals disagree about who needs attention.",
+      "04": "Useful when an AI demo needs a dependable workflow before it can be trusted.",
+      "05": "Useful when the underlying data is useful but nobody else can use it without help.",
   }[service.number] ?? "",
 }));
 
@@ -105,17 +105,12 @@ function HomeProjectCard({
           {project.outcome}
         </p>
 
-        <div
-          className="mt-6 flex flex-wrap gap-x-2 gap-y-2 border-t border-[rgba(255,247,238,0.14)] pt-5 font-mono text-[11px] text-[var(--dark-text-2)]"
+        <p
+          className="mt-6 border-t border-[rgba(255,247,238,0.14)] pt-5 font-mono text-[11px] leading-[1.65] text-[var(--dark-text-2)]"
           aria-label={`${project.name} system flow`}
         >
-          {project.flow.map((step, flowIndex) => (
-            <span key={step}>
-              {step}
-              {flowIndex < project.flow.length - 1 ? " →" : ""}
-            </span>
-          ))}
-        </div>
+          Starts with {project.flow[0]}. Works through {project.flow.slice(1, -1).join(", ")}. Leaves the team with {project.flow.at(-1)}.
+        </p>
       </div>
         <Link
           href={project.href}
@@ -196,11 +191,11 @@ export default function Home() {
             <div>
               <SectionEye label="Selected systems" dark />
               <h2 className="section-title section-title-dark max-w-[760px]">
-                Complete systems, from source evidence to operational action.
+                Proof, not a pile of projects.
               </h2>
               <p className="body-copy body-copy-dark mt-3 max-w-[620px]">
-                Four systems spanning website intelligence, revenue decisions, grounded content,
-                and reusable visual systems.
+                Each build starts with an awkward question: what changed, what is being missed,
+                and what should happen next?
               </p>
             </div>
             <ButtonLink href="/work">View all work →</ButtonLink>
@@ -226,17 +221,12 @@ export default function Home() {
                   <p className="mt-6 max-w-[680px] text-[20px] leading-[1.55] text-[var(--dark-text)] max-[640px]:text-[16px]">
                     {lens.outcome}
                   </p>
-                  <div
-                    className="mt-7 flex flex-wrap gap-x-2 gap-y-2 border-t border-[rgba(255,247,238,0.14)] pt-5 font-mono text-[11px] text-[var(--dark-text-2)]"
+                  <p
+                    className="mt-7 border-t border-[rgba(255,247,238,0.14)] pt-5 font-mono text-[11px] leading-[1.65] text-[var(--dark-text-2)]"
                     aria-label={`${lens.name} system flow`}
                   >
-                    {lens.flow.map((step, flowIndex) => (
-                      <span key={step}>
-                        {step}
-                        {flowIndex < lens.flow.length - 1 ? " →" : ""}
-                      </span>
-                    ))}
-                  </div>
+                    Starts with {lens.flow[0]}. Checks it against captured evidence. Leaves you with {lens.flow.at(-1)}.
+                  </p>
                 </div>
                 <div className="mt-8">
                   <ButtonLink
@@ -277,12 +267,12 @@ export default function Home() {
             <div>
               <SectionEye label="Where I can help" />
               <h2 className="section-title max-w-[720px]">
-                Useful systems for data-heavy work.
+                Where I can be useful when the work is stuck.
               </h2>
             </div>
             <p className="body-copy">
-              I help when the raw pieces exist, but the reporting, automation, intelligence, or
-              interface around them is still too manual to trust.
+              I help when the raw pieces exist but people are still rebuilding reports, missing
+              warning signs, or working around tools that should be doing more.
             </p>
           </Reveal>
           <div className="grid grid-cols-3 gap-3 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">

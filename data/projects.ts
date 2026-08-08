@@ -113,14 +113,14 @@ const coreProjects: Project[] = [
   {
     name: "Automated Intelligence Revenue System (AIRS)",
     slug: "airs",
-    classification: "Revenue intelligence system",
+    classification: "Account health and prioritisation system",
     description:
-      "Replaces stale product exports with prioritised accounts, clear reasoning, and sales-ready next steps.",
-    outcome: "Turns product usage signals into prioritised, explainable revenue action.",
+      "Helps revenue teams spot accounts losing momentum before the signal gets buried in exports and dashboards.",
+    outcome: "Brings product, CRM, and billing signals into one ranked account view with the reasons visible.",
     tags: ["BigQuery", "dbt", "XGBoost", "SHAP", "Airflow", "Power BI"],
     href: "/work/airs",
     summary:
-      "A revenue intelligence system design connecting behavioural product data, governed analytical models, explainable scoring, orchestration, and operational sales interfaces.",
+      "A system design for turning product behaviour, CRM context, and billing state into a ranked account list a revenue team can question and act on.",
     problem:
       "Product usage, account health, CRM, and billing signals often live in separate systems. Revenue teams work from stale exports or intuition because no governed layer converts that behaviour into prioritised action.",
     system:
@@ -367,35 +367,35 @@ export const services = [
     number: "01",
     name: "Data pipelines & analytics engineering",
     description:
-      "I design and build data pipelines that connect scattered sources into a clean, queryable layer: source extraction, warehouse modelling with dbt, transformation logic, scheduled jobs, and data quality checks. Most useful when reporting depends on manual exports, brittle spreadsheet logic, or sources that never talk to each other.",
+      "When the weekly report begins with downloading five CSVs, I bring the sources into one dependable layer with clear models, scheduled jobs, and checks that catch problems before the numbers reach a meeting.",
     tags: ["Python", "SQL", "dbt", "BigQuery", "Airflow", "Postgres", "Supabase"],
   },
   {
     number: "02",
     name: "Reporting systems & dashboard automation",
     description:
-      "I turn recurring reporting into a maintained system: automated dashboards, scheduled summaries, anomaly detection, stakeholder-ready metrics, and delivery workflows. The goal is not more charts; it is fewer status meetings and clearer decisions.",
+      "I replace reports that are rebuilt by hand with dashboards, scheduled summaries, and alerting that tell people what changed. The point is fewer status meetings, not more charts.",
     tags: ["Power BI", "Looker Studio", "Claude API", "FastAPI", "Next.js", "Recharts"],
   },
   {
     number: "03",
-    name: "Product & revenue intelligence",
+    name: "Product, retention & account signals",
     description:
-      "I build the analysis layer that connects product behaviour to business outcomes: funnel analysis, cohort tracking, activation and retention metrics, lead scoring with SHAP explainability, and conversion reporting. Product and sales teams get a clear view of which segments or accounts need attention and why.",
+      "I help product and revenue teams see who is activating, drifting away, or worth a closer look. That can mean funnels and cohorts, or an explainable account score with the reasons beside it.",
     tags: ["Python", "SQL", "XGBoost", "SHAP", "BigQuery", "dbt"],
   },
   {
     number: "04",
     name: "AI systems & workflow automation",
     description:
-      "I build AI workflows around specific operational problems: classification, summarisation, evidence collection, change monitoring, scoring, retrieval, and structured output generation. The valuable part is the system around the model: structured inputs, output guardrails, confidence logging, fallback handling, and a clear handoff when human review is needed.",
+      "I build AI workflows for jobs that are currently slow, repetitive, or easy to get wrong. The model is only one part: inputs, checks, fallbacks, logs, and a clear human handoff are what make it useful.",
     tags: ["Claude API", "LangChain", "FastAPI", "Python", "Supabase", "Firecrawl"],
   },
   {
     number: "05",
     name: "Data products & internal tooling",
     description:
-      "I design and build internal tools where the data work needs a proper interface: diagnostic portals, reporting dashboards, admin panels, monitoring screens, and data-backed MVPs. I cover the full path from data model and API design through to front-end, so the output is a working product rather than disconnected scripts.",
+      "When useful data is trapped in scripts or spreadsheets, I turn it into a practical tool: a diagnostic portal, reporting product, admin screen, or small internal app people can actually use without asking for help.",
     tags: ["Next.js", "React", "FastAPI", "Postgres", "AWS", "TypeScript"],
   },
 ];
